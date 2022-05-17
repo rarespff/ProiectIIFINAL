@@ -1,4 +1,5 @@
 ﻿using DataAccess.EF.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,9 @@ namespace DataAccess.Repositories.Implementations
 {
     public interface IUserRepository
     {
-        IEnumerable<User> GetUsers();
-        User GetUserById(int id);
 
+         Task<ActionResult<IEnumerable<User>>> GetUsers();
+         Task<ActionResult<User>> GetUserById(int id);
+         Task<ActionResult<User>> GetUserByName(string name);
     }
 }

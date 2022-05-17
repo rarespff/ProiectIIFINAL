@@ -8,51 +8,51 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
 
-namespace ProiectII.Controllers
+namespace ProiectII.EF.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ShoppingCartsController : ControllerBase
+    public class BrandsController : ControllerBase
     {
         private readonly IIDatabaseDbContext _context;
 
-        public ShoppingCartsController(IIDatabaseDbContext context)
+        public BrandsController(IIDatabaseDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/ShoppingCarts
+        // GET: api/Brands
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ShoppingCart>>> GetShoppingCarts()
+        public async Task<ActionResult<IEnumerable<Brand>>> GetBrands()
         {
-            return await _context.ShoppingCarts.ToListAsync();
+            return await _context.Brands.ToListAsync();
         }
 
-        // GET: api/ShoppingCarts/5
+        // GET: api/Brands/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ShoppingCart>> GetShoppingCart(int id)
+        public async Task<ActionResult<Brand>> GetBrand(int id)
         {
-            var shoppingCart = await _context.ShoppingCarts.FindAsync(id);
+            var brand = await _context.Brands.FindAsync(id);
 
-            if (shoppingCart == null)
+            if (brand == null)
             {
                 return NotFound();
             }
 
-            return shoppingCart;
+            return brand;
         }
 
-        // PUT: api/ShoppingCarts/5
+        // PUT: api/Brands/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutShoppingCart(int id, ShoppingCart shoppingCart)
+        public async Task<IActionResult> PutBrand(int id, Brand brand)
         {
-            if (id != shoppingCart.Id)
+            if (id != brand.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(shoppingCart).State = EntityState.Modified;
+            _context.Entry(brand).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace ProiectII.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ShoppingCartExists(id))
+                if (!BrandExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace ProiectII.Controllers
             return NoContent();
         }
 
-        // POST: api/ShoppingCarts
+        // POST: api/Brands
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ShoppingCart>> PostShoppingCart(ShoppingCart shoppingCart)
+        public async Task<ActionResult<Brand>> PostBrand(Brand brand)
         {
-            _context.ShoppingCarts.Add(shoppingCart);
+            _context.Brands.Add(brand);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetShoppingCart", new { id = shoppingCart.Id }, shoppingCart);
+            return CreatedAtAction("GetBrand", new { id = brand.Id }, brand);
         }
 
-        // DELETE: api/ShoppingCarts/5
+        // DELETE: api/Brands/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteShoppingCart(int id)
+        public async Task<IActionResult> DeleteBrand(int id)
         {
-            var shoppingCart = await _context.ShoppingCarts.FindAsync(id);
-            if (shoppingCart == null)
+            var brand = await _context.Brands.FindAsync(id);
+            if (brand == null)
             {
                 return NotFound();
             }
 
-            _context.ShoppingCarts.Remove(shoppingCart);
+            _context.Brands.Remove(brand);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ShoppingCartExists(int id)
+        private bool BrandExists(int id)
         {
-            return _context.ShoppingCarts.Any(e => e.Id == id);
+            return _context.Brands.Any(e => e.Id == id);
         }
     }
 }

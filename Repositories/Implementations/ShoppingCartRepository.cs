@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess.EF.AppDbContext;
+using DataAccess.EF.Models;
 using DataAccess.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories.Implementations
 {
@@ -16,14 +18,10 @@ namespace DataAccess.Repositories.Implementations
         {
             this.context = context;
         }
-        public EF.Models.ShoppingCart GetShoppingCartById(int id)
-        {
-            return context.ShoppingCarts.FirstOrDefault(x => x.Id == id);
-        }
 
-        public IEnumerable<EF.Models.ShoppingCart> GetShoppingCarts()
+        public async Task<ShoppingCart> GetCartByUserId(int id)
         {
-            return context.ShoppingCarts.ToList();
+            return await context.ShoppingCarts.Where(shoppingCart=>shoppingCart.UserId==id).SingleOrDefaultAsync();
         }
     }
 }

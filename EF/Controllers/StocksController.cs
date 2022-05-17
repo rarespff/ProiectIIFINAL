@@ -8,51 +8,51 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
 
-namespace ProiectII.Controllers
+namespace ProiectII.EF.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class StocksController : ControllerBase
     {
         private readonly IIDatabaseDbContext _context;
 
-        public OrdersController(IIDatabaseDbContext context)
+        public StocksController(IIDatabaseDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Orders
+        // GET: api/Stocks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        public async Task<ActionResult<IEnumerable<Stock>>> GetStocks()
         {
-            return await _context.Orders.ToListAsync();
+            return await _context.Stocks.ToListAsync();
         }
 
-        // GET: api/Orders/5
+        // GET: api/Stocks/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrders(int id)
+        public async Task<ActionResult<Stock>> GetStock(int id)
         {
-            var orders = await _context.Orders.FindAsync(id);
+            var stock = await _context.Stocks.FindAsync(id);
 
-            if (orders == null)
+            if (stock == null)
             {
                 return NotFound();
             }
 
-            return orders;
+            return stock;
         }
 
-        // PUT: api/Orders/5
+        // PUT: api/Stocks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrders(int id, Order orders)
+        public async Task<IActionResult> PutStock(int id, Stock stock)
         {
-            if (id != orders.Id)
+            if (id != stock.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(orders).State = EntityState.Modified;
+            _context.Entry(stock).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace ProiectII.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrdersExists(id))
+                if (!StockExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace ProiectII.Controllers
             return NoContent();
         }
 
-        // POST: api/Orders
+        // POST: api/Stocks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrders(Order orders)
+        public async Task<ActionResult<Stock>> PostStock(Stock stock)
         {
-            _context.Orders.Add(orders);
+            _context.Stocks.Add(stock);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrders", new { id = orders.Id }, orders);
+            return CreatedAtAction("GetStock", new { id = stock.Id }, stock);
         }
 
-        // DELETE: api/Orders/5
+        // DELETE: api/Stocks/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrders(int id)
+        public async Task<IActionResult> DeleteStock(int id)
         {
-            var orders = await _context.Orders.FindAsync(id);
-            if (orders == null)
+            var stock = await _context.Stocks.FindAsync(id);
+            if (stock == null)
             {
                 return NotFound();
             }
 
-            _context.Orders.Remove(orders);
+            _context.Stocks.Remove(stock);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool OrdersExists(int id)
+        private bool StockExists(int id)
         {
-            return _context.Orders.Any(e => e.Id == id);
+            return _context.Stocks.Any(e => e.Id == id);
         }
     }
 }

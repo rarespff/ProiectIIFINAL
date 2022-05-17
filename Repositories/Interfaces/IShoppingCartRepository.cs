@@ -9,7 +9,7 @@ namespace DataAccess.Repositories.Interfaces
 {
     public interface IShoppingCartRepository
     {
-        IEnumerable<ShoppingCart> GetShoppingCarts();
-        ShoppingCart GetShoppingCartById(int id);
+        Task<ShoppingCart> GetCartByUserId(int id);
+        
     }
 }

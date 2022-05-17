@@ -11,12 +11,12 @@ namespace DataAccess.EF.AppDbContext
         }
         
         public DbSet<User> Users { get; set; }
-        public DbSet<Account> Accounts { get; set; }
+        public DbSet<CartProduct> CartProducts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<Product> Products{ get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Adress> Adresses { get; set; }
+        public DbSet<Brand> Brands { get; set; }
+        public DbSet<Stock> Stocks { get; set; }
 
     }
 }

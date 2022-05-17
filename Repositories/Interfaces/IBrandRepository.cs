@@ -1,15 +1,14 @@
-﻿using System;
+﻿using DataAccess.EF.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataAccess.EF.Models;
 
 namespace DataAccess.Repositories.Interfaces
 {
-   public interface IAdressRepository
+    public interface IBrandRepository
     {
-        IEnumerable<Adress> GetAdresses();
-        Adress GetAdressById(int id);
+        Task<Brand> GetBrandByName(string name);
     }
 }

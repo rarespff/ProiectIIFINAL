@@ -1,15 +1,14 @@
-﻿using System;
+﻿using DataAccess.EF.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataAccess.EF.Models;
 
 namespace DataAccess.Repositories.Interfaces
 {
-    public interface IOrdersRepository
+    public interface ICartProductRepository
     {
-        IEnumerable<Order> GetOrders();
-        Order GetOrderById(int id);
+        Task<IEnumerable<CartProduct>> GetCartProductsByCartId(int id );
     }
 }

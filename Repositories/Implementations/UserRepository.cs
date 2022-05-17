@@ -1,5 +1,7 @@
 ﻿using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,7 @@ using System.Threading.Tasks;
 /// </summary>
 namespace DataAccess.Repositories.Implementations
 {
-    public class UserRepository:IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly IIDatabaseDbContext context;
 
@@ -24,14 +26,23 @@ namespace DataAccess.Repositories.Implementations
             this.context = context;
         }
 
-        public User GetUserById(int id)
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return context.Users.FirstOrDefault(x => x.Id == id);
+            return await context.Users.ToListAsync();
         }
 
-        public IEnumerable<User> GetUsers()
+  
+
+        public async Task<ActionResult<User>> GetUserByName(string name)
         {
-            return context.Users.ToList();
+            return await context.Users.Where(x => x.Username == name).FirstOrDefaultAsync();
+        }
+
+     
+        public async Task<ActionResult<User>> GetUserById(int id)
+        {
+            //return await context.Users.FirstOrDefault(x => x.Id == id);
+            return await context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
     }
 }

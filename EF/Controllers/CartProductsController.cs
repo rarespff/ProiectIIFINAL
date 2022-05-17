@@ -8,51 +8,51 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
 
-namespace ProiectII.Controllers
+namespace ProiectII.EF.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdressesController : ControllerBase
+    public class CartProductsController : ControllerBase
     {
         private readonly IIDatabaseDbContext _context;
 
-        public AdressesController(IIDatabaseDbContext context)
+        public CartProductsController(IIDatabaseDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Adresses
+        // GET: api/CartProducts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Adress>>> GetAdresses()
+        public async Task<ActionResult<IEnumerable<CartProduct>>> GetCartProducts()
         {
-            return await _context.Adresses.ToListAsync();
+            return await _context.CartProducts.ToListAsync();
         }
 
-        // GET: api/Adresses/5
+        // GET: api/CartProducts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Adress>> GetAdress(int id)
+        public async Task<ActionResult<CartProduct>> GetCartProduct(int id)
         {
-            var adress = await _context.Adresses.FindAsync(id);
+            var cartProduct = await _context.CartProducts.FindAsync(id);
 
-            if (adress == null)
+            if (cartProduct == null)
             {
                 return NotFound();
             }
 
-            return adress;
+            return cartProduct;
         }
 
-        // PUT: api/Adresses/5
+        // PUT: api/CartProducts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAdress(int id, Adress adress)
+        public async Task<IActionResult> PutCartProduct(int id, CartProduct cartProduct)
         {
-            if (id != adress.Id)
+            if (id != cartProduct.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(adress).State = EntityState.Modified;
+            _context.Entry(cartProduct).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace ProiectII.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AdressExists(id))
+                if (!CartProductExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace ProiectII.Controllers
             return NoContent();
         }
 
-        // POST: api/Adresses
+        // POST: api/CartProducts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Adress>> PostAdress(Adress adress)
+        public async Task<ActionResult<CartProduct>> PostCartProduct(CartProduct cartProduct)
         {
-            _context.Adresses.Add(adress);
+            _context.CartProducts.Add(cartProduct);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAdress", new { id = adress.Id }, adress);
+            return CreatedAtAction("GetCartProduct", new { id = cartProduct.Id }, cartProduct);
         }
 
-        // DELETE: api/Adresses/5
+        // DELETE: api/CartProducts/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAdress(int id)
+        public async Task<IActionResult> DeleteCartProduct(int id)
         {
-            var adress = await _context.Adresses.FindAsync(id);
-            if (adress == null)
+            var cartProduct = await _context.CartProducts.FindAsync(id);
+            if (cartProduct == null)
             {
                 return NotFound();
             }
 
-            _context.Adresses.Remove(adress);
+            _context.CartProducts.Remove(cartProduct);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool AdressExists(int id)
+        private bool CartProductExists(int id)
         {
-            return _context.Adresses.Any(e => e.Id == id);
+            return _context.CartProducts.Any(e => e.Id == id);
         }
     }
 }

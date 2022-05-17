@@ -1,6 +1,7 @@
 ﻿using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
 using DataAccess.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,18 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.Implementations
 {
-    public class CategoryRepository:ICategoryRepository
+    public class CartProductRepository:ICartProductRepository
     {
         private readonly IIDatabaseDbContext context;
 
-        public CategoryRepository(IIDatabaseDbContext context)
+        public CartProductRepository(IIDatabaseDbContext context)
         {
             this.context = context;
         }
-      
+
+        public async Task<IEnumerable<CartProduct>> GetCartProductsByCartId(int id)
+        {
+            return await context.CartProducts.Where(cartProduct=>cartProduct.ShoppingCartId==id).ToListAsync();
+        }
     }
 }

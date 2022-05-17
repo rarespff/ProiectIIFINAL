@@ -7,16 +7,14 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EF.Models
 {
-    public class Account
+    public class Stock
     {
         public int Id { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        public int Price { get; set; }
+        public int Quantity { get; set; }
+        public int Size { get; set; }
         [JsonIgnore]
-        public User User { get; set; }
-
-        public int UserId { get; set; }
-     
-        
+        public Product Product { get; set; }
+        public int ProductId { get; set; }
     }
 }

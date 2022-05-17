@@ -31,15 +31,18 @@ namespace ProiectII
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<IIDatabaseDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IIDatabase")));
+            services.AddDbContext<IIDatabaseDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IIDatabase12")));
 
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<ICategoryRepository, CategoryRepository>();
-            services.AddTransient<IAccountRepository, AccountRepository>();
-            services.AddTransient<IOrdersRepository, OrdersRepository>();
-            services.AddTransient<IShoppingCartRepository, ShoppingCartRepository>();
-            services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddTransient<IAdressRepository, AdressRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IStockRepository, StockRepository>();
+            services.AddScoped<ICartProductRepository, CartProductRepository>();
+            services.AddScoped<IBrandRepository, BrandRepository>();
+            services.AddScoped <StockRepository>();
+            services.AddScoped<CategoryRepository>();
+
 
 
 

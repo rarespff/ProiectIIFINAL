@@ -9,7 +9,9 @@ namespace DataAccess.Repositories.Interfaces
 {
    public interface IProductRepository
     {
-        IEnumerable<Product> GetProducts();
-        Product GetProductById(int id);
+        Task<Product> GetProductById(int id);
+        Task<IEnumerable<Product>> GetProductByCategoryName(string name);
+        Task<IEnumerable<Product>> GetAvailableProducts();
+        Task<Product> GetProductByName(string name);
     }
 }

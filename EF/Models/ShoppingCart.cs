@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace DataAccess.EF.Models
 {
-   public class ShoppingCart
+    public class ShoppingCart
     {
         public int Id { get; set; }
-        public int ItemsCount { get; set; }
         [JsonIgnore]
-        public Product Product { get; set; }
-        public int ProductId { get; set; }
-      
+        public User User { get; set; }
+        public int UserId { get; set; }
+        public bool IsOrdered { get; set; }
+
     }
 }
