@@ -1,4 +1,5 @@
 ﻿using DataAccess.EF.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace DataAccess.Repositories.Interfaces
     public interface IStockRepository
     {
       
-        Task<Stock> GetStockByProductIdAndSize(int id, int size);
-        Task<IEnumerable<Stock>> GetStockDetailsForProductById(int id);
+        Task<ActionResult<Stock>> GetStockByProductIdAndSize(int id, int size);
+        Task<ActionResult<IEnumerable<Stock>>> GetStockDetailsForProductById(int id);
     }
 }

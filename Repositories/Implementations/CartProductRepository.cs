@@ -1,6 +1,7 @@
 ﻿using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
 using DataAccess.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace DataAccess.Repositories.Implementations
             this.context = context;
         }
 
-        public async Task<IEnumerable<CartProduct>> GetCartProductsByCartId(int id)
+        public async Task<ActionResult<IEnumerable<CartProduct>>> GetCartProductsByCartId(int id)
         {
             return await context.CartProducts.Where(cartProduct=>cartProduct.ShoppingCartId==id).ToListAsync();
         }

@@ -7,18 +7,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
+using DataAccess.Repositories.Interfaces;
 
 namespace ProiectII.EF.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ShoppingCartsController : ControllerBase
     {
         private readonly IIDatabaseDbContext _context;
+        private readonly IShoppingCartRepository repository;
 
-        public ShoppingCartsController(IIDatabaseDbContext context)
+        public ShoppingCartsController(IIDatabaseDbContext context, IShoppingCartRepository repository)
         {
             _context = context;
+            this.repository = repository;
         }
 
         // GET: api/ShoppingCarts
@@ -28,6 +31,12 @@ namespace ProiectII.EF.Controllers
             return await _context.ShoppingCarts.ToListAsync();
         }
 
+        [HttpGet("{id}")]
+        [ActionName("GetCartByUserId")]
+        public async Task<ActionResult<ShoppingCart>> GetShoppingCarts(int id)
+        {
+            return await repository.GetCartByUserId(id);
+        }
         // GET: api/ShoppingCarts/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ShoppingCart>> GetShoppingCart(int id)

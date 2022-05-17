@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
+using DataAccess.Repositories.Interfaces;
 
 namespace ProiectII.EF.Controllers
 {
@@ -15,10 +16,12 @@ namespace ProiectII.EF.Controllers
     public class CartProductsController : ControllerBase
     {
         private readonly IIDatabaseDbContext _context;
+        private readonly ICartProductRepository repository;
 
-        public CartProductsController(IIDatabaseDbContext context)
+        public CartProductsController(IIDatabaseDbContext context, ICartProductRepository repository)
         {
             _context = context;
+            this.repository = repository;
         }
 
         // GET: api/CartProducts
@@ -28,18 +31,12 @@ namespace ProiectII.EF.Controllers
             return await _context.CartProducts.ToListAsync();
         }
 
+        //VERIFICA!!!
         // GET: api/CartProducts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CartProduct>> GetCartProduct(int id)
+        public async Task<ActionResult<IEnumerable<CartProduct>>> GetCartProduct(int id)
         {
-            var cartProduct = await _context.CartProducts.FindAsync(id);
-
-            if (cartProduct == null)
-            {
-                return NotFound();
-            }
-
-            return cartProduct;
+            return await repository.GetCartProductsByCartId(id);
         }
 
         // PUT: api/CartProducts/5

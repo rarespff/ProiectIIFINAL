@@ -10,7 +10,7 @@ using DataAccess.EF.Models;
 
 namespace ProiectII.EF.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class StocksController : ControllerBase
     {
@@ -27,6 +27,8 @@ namespace ProiectII.EF.Controllers
         {
             return await _context.Stocks.ToListAsync();
         }
+
+
 
         // GET: api/Stocks/5
         [HttpGet("{id}")]

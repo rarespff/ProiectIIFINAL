@@ -105,28 +105,20 @@ namespace ProiectII.EF.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        [ActionName("Register")]
+        public async Task<ActionResult<String>> PostUser(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            
+            var message = await repository.AddUser(user);
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return message;
         }
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<ActionResult<String>> DeleteUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return await repository.DeleteUser(id);
         }
 
         private bool UserExists(int id)

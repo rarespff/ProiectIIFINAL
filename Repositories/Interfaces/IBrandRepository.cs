@@ -1,4 +1,5 @@
 ﻿using DataAccess.EF.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace DataAccess.Repositories.Interfaces
 {
     public interface IBrandRepository
     {
-        Task<Brand> GetBrandByName(string name);
+        Task<ActionResult<Brand>> GetBrandByName(string name);
     }
 }

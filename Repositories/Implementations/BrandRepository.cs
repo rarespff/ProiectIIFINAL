@@ -1,6 +1,7 @@
 ﻿using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
 using DataAccess.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace DataAccess.Repositories.Implementations
             this.context = context;
         }
 
-        public async Task<Brand> GetBrandByName(string name)
+        public async Task<ActionResult<Brand>> GetBrandByName(string name)
         {
             return await context.Brands.Where(brand => brand.Name == name).SingleOrDefaultAsync();
         }

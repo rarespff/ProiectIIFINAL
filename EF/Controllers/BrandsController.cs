@@ -7,29 +7,34 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
+using DataAccess.Repositories.Implementations;
+using DataAccess.Repositories.Interfaces;
 
 namespace ProiectII.EF.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class BrandsController : ControllerBase
     {
         private readonly IIDatabaseDbContext _context;
+        private readonly IBrandRepository repository;
 
-        public BrandsController(IIDatabaseDbContext context)
+        public BrandsController(IIDatabaseDbContext context, IBrandRepository repository)
         {
             _context = context;
+            this.repository = repository;
         }
 
         // GET: api/Brands
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Brand>>> GetBrands()
+        [HttpGet("{name}")]
+        [ActionName("ByName")]
+        public async Task<ActionResult<Brand>> GetBrand(string name)
         {
-            return await _context.Brands.ToListAsync();
+            return await repository.GetBrandByName(name);
         }
 
-        // GET: api/Brands/5
         [HttpGet("{id}")]
+        [ActionName("ById")]
         public async Task<ActionResult<Brand>> GetBrand(int id)
         {
             var brand = await _context.Brands.FindAsync(id);
@@ -42,8 +47,6 @@ namespace ProiectII.EF.Controllers
             return brand;
         }
 
-        // PUT: api/Brands/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBrand(int id, Brand brand)
         {
@@ -73,8 +76,6 @@ namespace ProiectII.EF.Controllers
             return NoContent();
         }
 
-        // POST: api/Brands
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Brand>> PostBrand(Brand brand)
         {
@@ -84,7 +85,6 @@ namespace ProiectII.EF.Controllers
             return CreatedAtAction("GetBrand", new { id = brand.Id }, brand);
         }
 
-        // DELETE: api/Brands/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBrand(int id)
         {

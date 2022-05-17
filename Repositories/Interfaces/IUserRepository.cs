@@ -14,5 +14,7 @@ namespace DataAccess.Repositories.Implementations
          Task<ActionResult<IEnumerable<User>>> GetUsers();
          Task<ActionResult<User>> GetUserById(int id);
          Task<ActionResult<User>> GetUserByName(string name);
+         Task<ActionResult<String>> AddUser(User user);
+         Task<ActionResult<String>> DeleteUser(int id);
     }
 }

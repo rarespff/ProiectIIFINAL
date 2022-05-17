@@ -7,40 +7,53 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
+using ProiectII.Repositories.Implementations;
+using DataAccess.Repositories.Interfaces;
 
 namespace ProiectII.EF.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
         private readonly IIDatabaseDbContext _context;
+        private readonly IProductRepository repository;
 
-        public ProductsController(IIDatabaseDbContext context)
+        public ProductsController(IIDatabaseDbContext context, ProductRepository repository)
         {
             _context = context;
         }
 
         // GET: api/Products
         [HttpGet]
+        [ActionName("Available")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            return await repository.GetAvailableProducts();
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
+        [ActionName("ProductById")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return product;
+            return await repository.GetProductById(id);
         }
+
+        [HttpGet("{name}")]
+        [ActionName("ProductByCategoryName")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductByCategoryName(string name)
+        {
+            return await repository.GetProductByCategoryName(name);
+        }
+
+        [HttpGet("{name}")]
+        [ActionName("ProductByName")]
+        public async Task<ActionResult<Product>> GetProductByName(string name)
+        {
+            return await repository.GetProductByName(name);
+        }
+
 
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

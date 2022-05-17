@@ -44,5 +44,27 @@ namespace DataAccess.Repositories.Implementations
             //return await context.Users.FirstOrDefault(x => x.Id == id);
             return await context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
+
+        public async Task<ActionResult<String>> AddUser(User user)
+        {
+            Console.WriteLine(user.LastName+"aaaaaaaaaa");            
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+            return "User added";
+        }
+
+        public async Task<ActionResult<String>> DeleteUser(int id)
+        {
+            var user = await context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return "User not found";
+            }
+
+            context.Users.Remove(user);
+            await context.SaveChangesAsync();
+            return "User deleted";
+
+        }
     }
 }
