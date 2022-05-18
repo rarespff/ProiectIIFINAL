@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
+using DataAccess.Repositories.Interfaces;
+using ProiectII.EF.ViewModels;
 
 namespace ProiectII.EF.Controllers
 {
@@ -15,10 +17,12 @@ namespace ProiectII.EF.Controllers
     public class StocksController : ControllerBase
     {
         private readonly IIDatabaseDbContext _context;
+        private readonly IStockRepository repository;
 
-        public StocksController(IIDatabaseDbContext context)
+        public StocksController(IIDatabaseDbContext context, IStockRepository repository)
         {
             _context = context;
+            this.repository=repository;
         }
 
         // GET: api/Stocks
@@ -26,6 +30,20 @@ namespace ProiectII.EF.Controllers
         public async Task<ActionResult<IEnumerable<Stock>>> GetStocks()
         {
             return await _context.Stocks.ToListAsync();
+        }
+
+        [HttpGet]
+        [ActionName("GetStockByProductAndSize")]
+        public async Task<ActionResult<Stock>> GetStocksByProductAndSize(StockVM stockVM)
+        {
+            return await repository.GetStockByProductIdAndSize(stockVM);
+        }
+
+        [HttpGet("{id}")]
+        [ActionName("GetStockByProductAndSize")]
+        public async Task<ActionResult<IEnumerable<Stock>>> GetStockDetailsForProductById(int id)
+        {
+            return await repository.GetStockDetailsForProductById(id);
         }
 
 

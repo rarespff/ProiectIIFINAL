@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
-using DataAccess.Repositories.Implementations;
+using DataAccess.Repositories.Interfaces;
 using ProiectII.EF.ViewModels;
 
 namespace ProiectII.EF.Controllers
@@ -26,30 +26,30 @@ namespace ProiectII.EF.Controllers
         }
 
         // GET: api/Users
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-            return await repository.GetUsers();
-            //return await _context.Users.ToListAsync();
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        //{
+        //    return await repository.GetUsers();
+        //}
 
         // GET: api/Users/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
-        {
-            var user = await repository.GetUserById(id);
+        //[HttpGet("{id}")]
+        //[ActionName("GetUserById")]
+        //public async Task<ActionResult<User>> GetUser(int id)
+        //{
+        //    var user = await repository.GetUserById(id);
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return user;
-        }
+        //    return user;
+        //}
 
         [HttpPost]
         [ActionName("Login")]
-        public async Task<ActionResult<User>> PostUser([FromBody]UserVM userVM)
+        public async Task<ActionResult<User>> AddUser([FromBody]UserVM userVM)
         {
             var user = await repository.GetUserByName(userVM.Username);
             if(user==null)
@@ -67,63 +67,63 @@ namespace ProiectII.EF.Controllers
                     return null;
                 }
             }
-
-            //return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
-        // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
-        {
-            if (id != user.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [ActionName("Register")]
         public async Task<ActionResult<String>> PostUser(User user)
         {
-            
+
             var message = await repository.AddUser(user);
 
             return message;
         }
 
         // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<String>> DeleteUser(int id)
-        {
-            return await repository.DeleteUser(id);
-        }
+        //[HttpDelete("{id}")]
+        //public async Task<ActionResult<String>> DeleteUser(int id)
+        //{
+        //    return await repository.DeleteUser(id);
+        //}
 
-        private bool UserExists(int id)
-        {
-            return _context.Users.Any(e => e.Id == id);
-        }
+        // PUT: api/Users/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutUser(int id, User user)
+        //{
+        //    if (id != user.Id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    _context.Entry(user).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!UserExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
+
+        // POST: api/Users
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
+
+        //    private bool UserExists(int id)
+        //    {
+        //        return _context.Users.Any(e => e.Id == id);
+        //    }
     }
 }

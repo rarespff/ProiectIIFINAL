@@ -33,76 +33,82 @@ namespace ProiectII.EF.Controllers
             return await repository.GetBrandByName(name);
         }
 
+        [HttpGet]
+        [ActionName("GetAllBrands")]
+        public async Task<ActionResult<IEnumerable<Brand>>> GetAllBrands()
+        {
+            return await repository.GetAllBrands();
+        }
+
         [HttpGet("{id}")]
-        [ActionName("ById")]
-        public async Task<ActionResult<Brand>> GetBrand(int id)
+        [ActionName("GetBrandById")]
+        public async Task<ActionResult<Brand>> GetBrandById(int id)
         {
-            var brand = await _context.Brands.FindAsync(id);
-
-            if (brand == null)
-            {
-                return NotFound();
-            }
-
-            return brand;
+            return await repository.GetBrandById(id);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBrand(int id, Brand brand)
-        {
-            if (id != brand.Id)
-            {
-                return BadRequest();
-            }
 
-            _context.Entry(brand).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BrandExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //[HttpGet("{id}")]
+        //[ActionName("ById")]
+        //public async Task<ActionResult<Brand>> GetBrand(int id)
+        //{
+        //    var brand = await _context.Brands.FindAsync(id);
 
-            return NoContent();
-        }
+        //    if (brand == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return brand;
+        //}
+
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutBrand(int id, Brand brand)
+        //{
+        //    if (id != brand.Id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    _context.Entry(brand).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!BrandExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
 
         [HttpPost]
-        public async Task<ActionResult<Brand>> PostBrand(Brand brand)
+        [ActionName("AddBrand")]
+        public async Task<ActionResult<String>> AddBrand(Brand brand)
         {
-            _context.Brands.Add(brand);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetBrand", new { id = brand.Id }, brand);
+            return await repository.AddBrand(brand);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBrand(int id)
+        [ActionName("DeleteBrand")]
+        public async Task<ActionResult<String>> DeleteBrand(int id)
         {
-            var brand = await _context.Brands.FindAsync(id);
-            if (brand == null)
-            {
-                return NotFound();
-            }
-
-            _context.Brands.Remove(brand);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return await repository.DeleteBrand(id);
         }
 
-        private bool BrandExists(int id)
-        {
-            return _context.Brands.Any(e => e.Id == id);
-        }
+        //private bool BrandExists(int id)
+        //{
+        //    return _context.Brands.Any(e => e.Id == id);
+        //}
     }
 }

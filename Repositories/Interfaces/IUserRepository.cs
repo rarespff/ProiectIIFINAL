@@ -6,15 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Repositories.Implementations
+namespace DataAccess.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-
-         Task<ActionResult<IEnumerable<User>>> GetUsers();
-         Task<ActionResult<User>> GetUserById(int id);
-         Task<ActionResult<User>> GetUserByName(string name);
-         Task<ActionResult<String>> AddUser(User user);
-         Task<ActionResult<String>> DeleteUser(int id);
+        Task<ActionResult<IEnumerable<User>>> GetUsers();
+        Task<ActionResult<User>> GetUserByName(string name);
+        Task<ActionResult<User>> GetUserById(int id);
+        Task<ActionResult<String>> AddUser(User user);
+        Task<ActionResult<String>> DeleteUser(int id);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
+using DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -46,8 +47,7 @@ namespace DataAccess.Repositories.Implementations
         }
 
         public async Task<ActionResult<String>> AddUser(User user)
-        {
-            Console.WriteLine(user.LastName+"aaaaaaaaaa");            
+        {          
             context.Users.Add(user);
             await context.SaveChangesAsync();
             return "User added";

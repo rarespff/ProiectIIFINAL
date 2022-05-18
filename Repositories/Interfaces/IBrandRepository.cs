@@ -11,5 +11,9 @@ namespace DataAccess.Repositories.Interfaces
     public interface IBrandRepository
     {
         Task<ActionResult<Brand>> GetBrandByName(string name);
+        Task<ActionResult<Brand>> GetBrandById(int id);
+        Task<ActionResult<IEnumerable<Brand>>> GetAllBrands();
+        Task<ActionResult<String>> DeleteBrand(int id);
+        Task<ActionResult<String>> AddBrand(Brand brand);
     }
 }

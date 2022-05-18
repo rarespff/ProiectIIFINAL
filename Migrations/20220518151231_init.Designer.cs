@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ProiectII.Migrations
 {
     [DbContext(typeof(IIDatabaseDbContext))]
-    [Migration("20220517163031_init")]
+    [Migration("20220518151231_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

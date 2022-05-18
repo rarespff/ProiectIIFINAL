@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
 using DataAccess.Repositories.Interfaces;
+using DataAccess.Repositories.Implementations;
 
 namespace ProiectII.EF.Controllers
 {
@@ -16,12 +17,16 @@ namespace ProiectII.EF.Controllers
     public class ShoppingCartsController : ControllerBase
     {
         private readonly IIDatabaseDbContext _context;
-        private readonly IShoppingCartRepository repository;
+        private readonly IUserRepository userRepository;
+        private readonly IShoppingCartRepository shoppingCartRepository;
+        private readonly ICartProductRepository cartProductRepository;
 
-        public ShoppingCartsController(IIDatabaseDbContext context, IShoppingCartRepository repository)
+        public ShoppingCartsController(IIDatabaseDbContext context, IShoppingCartRepository shoppingCartRepository,
+                                        ICartProductRepository cartProductRepository)
         {
             _context = context;
-            this.repository = repository;
+            this.shoppingCartRepository = shoppingCartRepository;
+            this.cartProductRepository = cartProductRepository;
         }
 
         // GET: api/ShoppingCarts
@@ -35,7 +40,7 @@ namespace ProiectII.EF.Controllers
         [ActionName("GetCartByUserId")]
         public async Task<ActionResult<ShoppingCart>> GetShoppingCarts(int id)
         {
-            return await repository.GetCartByUserId(id);
+            return await shoppingCartRepository.GetCartByUserId(id);
         }
         // GET: api/ShoppingCarts/5
         [HttpGet("{id}")]
@@ -50,6 +55,12 @@ namespace ProiectII.EF.Controllers
 
             return shoppingCart;
         }
+
+        //[HttpGet]
+        //public async Task<ActionResult<ShoppingCart>> AddProductToShoppingCart(int id,[FromBody] )
+        //{
+            
+        //}
 
         // PUT: api/ShoppingCarts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
