@@ -20,29 +20,29 @@ namespace DataAccess.Repositories.Implementations
             this.context = context;
         }
 
-        public async Task<ActionResult<Brand>> GetBrandByName(string name)
+        public async Task<Brand> GetBrandByName(string name)
         {
             return await context.Brands.Where(brand => brand.Name == name).SingleOrDefaultAsync();
         }
 
-        public async Task<ActionResult<Brand>> GetBrandById(int id)
+        public async Task<Brand> GetBrandById(int id)
         {
             return await context.Brands.Where(brand => brand.Id== id).SingleOrDefaultAsync();
         }
 
-        public async Task<ActionResult<IEnumerable<Brand>>> GetAllBrands()
+        public async Task<IEnumerable<Brand>> GetAllBrands()
         {
             return await context.Brands.ToListAsync();
         }
 
-        public async Task<ActionResult<String>> AddBrand(Brand brand)
+        public async Task<String> AddBrand(Brand brand)
         {
             context.Brands.Add(brand);
             await context.SaveChangesAsync();
             return "Brand added";
         }
 
-        public async Task<ActionResult<String>> DeleteBrand(int id)
+        public async Task<String> DeleteBrand(int id)
         {
             var brand=await context.Brands.Where(brand => brand.Id == id).SingleOrDefaultAsync();
             if(brand==null)

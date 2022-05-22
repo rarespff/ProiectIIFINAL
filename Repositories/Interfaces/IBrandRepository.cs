@@ -10,10 +10,10 @@ namespace DataAccess.Repositories.Interfaces
 {
     public interface IBrandRepository
     {
-        Task<ActionResult<Brand>> GetBrandByName(string name);
-        Task<ActionResult<Brand>> GetBrandById(int id);
-        Task<ActionResult<IEnumerable<Brand>>> GetAllBrands();
-        Task<ActionResult<String>> DeleteBrand(int id);
-        Task<ActionResult<String>> AddBrand(Brand brand);
+        Task<Brand> GetBrandByName(string name);
+        Task<Brand> GetBrandById(int id);
+        Task<IEnumerable<Brand>> GetAllBrands();
+        Task<String> DeleteBrand(int id);
+        Task<String> AddBrand(Brand brand);
     }
 }

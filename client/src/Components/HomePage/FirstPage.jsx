@@ -15,12 +15,12 @@ import stockService from "../../Services/StockService";
 
 function FirstPage() {
 
-    const [productsOnSale, setProductsOnSale] = useState([]);
-    useEffect(async () => {
-        productService.getProductsOnSale().then((response) => {
-            setProductsOnSale(response);
-        });
-    },[]);
+    // const [productsOnSale, setProductsOnSale] = useState([]);
+    // useEffect(async () => {
+    //     productService.getProductsOnSale().then((response) => {
+    //         setProductsOnSale(response);
+    //     });
+    // },[]);
 
 
     return (
@@ -38,7 +38,7 @@ function FirstPage() {
                     </Container>
                 </Container>
             </Row>
-            <Container className="featured-container">
+            {/* <Container className="featured-container">
                 <div className="featured-div">
                     <h1 className="title, title-featured">
                         Featured products
@@ -59,7 +59,7 @@ function FirstPage() {
                         }
                     </Row>
                 </Col>
-            </Container>
+            </Container> */}
 
             <FooterPage/></>
     )

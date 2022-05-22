@@ -9,6 +9,6 @@ namespace DataAccess.Repositories.Interfaces
 {
     public interface ICategoryRepository
     {
-        
+        Task<Category> GetCategoryByName(string name);
     }
 }

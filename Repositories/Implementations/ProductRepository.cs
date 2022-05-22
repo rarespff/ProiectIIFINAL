@@ -29,8 +29,15 @@ namespace ProiectII.Repositories.Implementations
             return await context.Products.Where(x => x.Id == id).SingleOrDefaultAsync();
         }
 
+        public async Task<String> AddProduct(Product product)
+        {
+            context.Products.Add(product);
+            await context.SaveChangesAsync();
+            return "Product added";
+        }
 
-        public async Task<ActionResult<IEnumerable<Product>>> GetAvailableProducts()
+
+        public async Task<IEnumerable<Product>> GetAvailableProducts()
         {
             var stocks = await context.Stocks.Where(stock => stock.Quantity > 0).ToListAsync();
             var availableProducts =  new List<Product>();
@@ -41,15 +48,30 @@ namespace ProiectII.Repositories.Implementations
             return availableProducts;
         }
 
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByCategoryName(string name)
+        public async Task<IEnumerable<Product>> GetProductByCategoryName(string name)
         {
             return await context.Products.Where(product => product.Category.Name == name).ToListAsync();
         }
 
        
-        public async Task<ActionResult<Product>> GetProductByName(string name)
+        public async Task<Product> GetProductByName(string name)
         {
             return await context.Products.Where(product => product.Name == name).SingleOrDefaultAsync();
+        }
+
+        public async Task<String> DeleteProduct(int id)
+        {
+            var product = await context.Products.Where(product=>product.Id == id).SingleOrDefaultAsync();
+            if(product == null)
+            {
+                return "Product not founded";
+            }
+            else
+            {
+                context.Products.Remove(product);
+                await context.SaveChangesAsync();
+                return "Product deleted";
+            }
         }
     }
 }

@@ -16,6 +16,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ProiectII.Repositories.Implementations;
+using ProiectII.Services;
+using ProiectII.Services.Implementations;
+using ProiectII.Services.Interfaces;
 
 namespace ProiectII
 {
@@ -40,8 +43,9 @@ namespace ProiectII
             services.AddScoped<IStockRepository, StockRepository>();
             services.AddScoped<ICartProductRepository, CartProductRepository>();
             services.AddScoped<IBrandRepository, BrandRepository>();
-            services.AddScoped <StockRepository>();
+            services.AddScoped<StockRepository>();
             services.AddScoped<CategoryRepository>();
+            services.AddScoped<IProductService, ProductService>();
 
 
 

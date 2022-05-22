@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProiectII.EF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,13 @@ namespace DataAccess.EF.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public Brand() { }
+
+        public Brand(BrandVM brandVM)
+        {
+            this.Id=brandVM.Id;
+            this.Name=brandVM.Name;
+        }
     }
 }

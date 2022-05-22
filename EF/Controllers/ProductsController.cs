@@ -9,6 +9,8 @@ using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
 using ProiectII.Repositories.Implementations;
 using DataAccess.Repositories.Interfaces;
+using ProiectII.EF.ViewModels;
+using ProiectII.Services.Implementations;
 
 namespace ProiectII.EF.Controllers
 {
@@ -16,106 +18,58 @@ namespace ProiectII.EF.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IIDatabaseDbContext _context;
-        private readonly IProductRepository repository;
-
-        public ProductsController(IIDatabaseDbContext context, ProductRepository repository)
+        private readonly ProductService productService;
+        public ProductsController(ProductService productService)
         {
-            _context = context;
+            this.productService= productService;
         }
 
         // GET: api/Products
         [HttpGet]
         [ActionName("Available")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductVM>>> GetProducts()
         {
-            return await repository.GetAvailableProducts();
+            return Ok(await productService.GetProducts());
         }
 
-        // GET: api/Products/5
         [HttpGet("{id}")]
         [ActionName("ProductById")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<ProductVM>> GetProduct(int id)
         {
-            return await repository.GetProductById(id);
+            return Ok(await productService.GetProductById(id));
         }
 
         [HttpGet("{name}")]
         [ActionName("ProductByCategoryName")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByCategoryName(string name)
+        public async Task<ActionResult<IEnumerable<ProductVM>>> GetProductByCategoryName(string name)
         {
-            return await repository.GetProductByCategoryName(name);
+            return Ok(await productService.GetProductByCategoryName(name));
         }
 
         [HttpGet("{name}")]
         [ActionName("ProductByName")]
-        public async Task<ActionResult<Product>> GetProductByName(string name)
+        public async Task<ActionResult<IEnumerable<ProductVM>>> GetProductByName(string name)
         {
-            return await repository.GetProductByName(name);
+            return Ok(await productService.GetProductByName(name));
         }
 
-
-        // PUT: api/Products/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
-        {
-            if (id != product.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(product).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Products
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        [ActionName("AddProduct")]
+        public async Task<ActionResult<String>> AddProduct([FromBody] AddProductVM productVM)
         {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            return Ok(await productService.AddProduct(productVM));
         }
 
-        // DELETE: api/Products/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        [ActionName("DeleteProduct")]
+        public async Task<ActionResult<String>> DeleteProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Ok(await productService.DeleteProduct(id));
         }
 
-        private bool ProductExists(int id)
-        {
-            return _context.Products.Any(e => e.Id == id);
-        }
+        //private bool ProductExists(int id)
+        //{
+        //    return _context.Products.Any(e => e.Id == id);
+        //}
     }
 }

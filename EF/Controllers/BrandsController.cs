@@ -9,6 +9,8 @@ using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
 using DataAccess.Repositories.Implementations;
 using DataAccess.Repositories.Interfaces;
+using ProiectII.EF.ViewModels;
+using ProiectII.Services.Interfaces;
 
 namespace ProiectII.EF.Controllers
 {
@@ -17,98 +19,50 @@ namespace ProiectII.EF.Controllers
     public class BrandsController : ControllerBase
     {
         private readonly IIDatabaseDbContext _context;
-        private readonly IBrandRepository repository;
+        private readonly IBrandService brandService;
 
-        public BrandsController(IIDatabaseDbContext context, IBrandRepository repository)
+        public BrandsController(IIDatabaseDbContext context, IBrandService brandService)
         {
             _context = context;
-            this.repository = repository;
+            this.brandService = brandService;
         }
 
         // GET: api/Brands
         [HttpGet("{name}")]
         [ActionName("ByName")]
-        public async Task<ActionResult<Brand>> GetBrand(string name)
+        public async Task<ActionResult<BrandVM>> GetBrand(string name)
         {
-            return await repository.GetBrandByName(name);
+            return Ok(await brandService.GetBrand(name));
         }
 
         [HttpGet]
         [ActionName("GetAllBrands")]
-        public async Task<ActionResult<IEnumerable<Brand>>> GetAllBrands()
+        public async Task<ActionResult<IEnumerable<BrandVM>>> GetAllBrands()
         {
-            return await repository.GetAllBrands();
+            return Ok(await brandService.GetAllBrands());
         }
 
         [HttpGet("{id}")]
         [ActionName("GetBrandById")]
-        public async Task<ActionResult<Brand>> GetBrandById(int id)
+        public async Task<ActionResult<BrandVM>> GetBrandById(int id)
         {
-            return await repository.GetBrandById(id);
+            return Ok(await brandService.GetBrandById(id));
         }
 
 
-
-        //[HttpGet("{id}")]
-        //[ActionName("ById")]
-        //public async Task<ActionResult<Brand>> GetBrand(int id)
-        //{
-        //    var brand = await _context.Brands.FindAsync(id);
-
-        //    if (brand == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return brand;
-        //}
-
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutBrand(int id, Brand brand)
-        //{
-        //    if (id != brand.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(brand).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!BrandExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
         [HttpPost]
         [ActionName("AddBrand")]
-        public async Task<ActionResult<String>> AddBrand(Brand brand)
+        public async Task<ActionResult<String>> AddBrand(BrandVM brandVM)
         {
-            return await repository.AddBrand(brand);
+            return Ok(await brandService.AddBrand(brandVM));
         }
 
         [HttpDelete("{id}")]
         [ActionName("DeleteBrand")]
         public async Task<ActionResult<String>> DeleteBrand(int id)
         {
-            return await repository.DeleteBrand(id);
+            return Ok(await brandService.DeleteBrand(id));
         }
 
-        //private bool BrandExists(int id)
-        //{
-        //    return _context.Brands.Any(e => e.Id == id);
-        //}
     }
 }
