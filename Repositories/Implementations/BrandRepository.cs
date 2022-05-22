@@ -3,6 +3,7 @@ using DataAccess.EF.Models;
 using DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ProiectII.EF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,8 +36,9 @@ namespace DataAccess.Repositories.Implementations
             return await context.Brands.ToListAsync();
         }
 
-        public async Task<String> AddBrand(Brand brand)
+        public async Task<String> AddBrand(BrandVM brandVM)
         {
+            Brand brand = new Brand(brandVM);
             context.Brands.Add(brand);
             await context.SaveChangesAsync();
             return "Brand added";

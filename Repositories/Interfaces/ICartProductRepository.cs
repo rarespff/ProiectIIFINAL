@@ -11,9 +11,9 @@ namespace DataAccess.Repositories.Interfaces
 {
     public interface ICartProductRepository
     {
-        Task<ActionResult<IEnumerable<CartProduct>>> GetCartProductsByUserId(int id );
-        Task<ActionResult<String>> AddProductToCart(int userId, CartProductVM cartProductVM);
-        Task<ActionResult<Int32>> GetCartProductsNumber(int id);
-        Task<ActionResult<String>> RemoveProductsFromCart(int id);
+        Task<IEnumerable<CartProduct>> GetCartProductsByUserId(int id );
+        Task<String> AddProductToCart(int userId,CartProductVM cartProductVM);
+        Task<Int32> GetCartProductsNumber(int id);
+        Task<String> RemoveProductsFromCart(int id);
     }
 }

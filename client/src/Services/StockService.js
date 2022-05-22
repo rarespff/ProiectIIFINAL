@@ -9,9 +9,8 @@ class StockService {
             productId: productId,
             size: size,
             price: price,
-            quantity: quantity,
-            isFeatured: true
-        }, { headers: authHeader() }).then(response => {
+            quantity: quantity
+        }).then(response => {
             return response.data;
         });
     }
@@ -23,14 +22,13 @@ class StockService {
             size: size,
             price: price,
             quantity: quantity,
-            isFeatured: isFeatured
         }).then(response => {
             return response.data;
         })
     }
 
     deleteStockOfProduct(productId, size) {
-        return axios.delete(API_URL + "delete/" + productId + "/" + size, { headers: authHeader() }).then(response => {
+        return axios.delete(API_URL + "delete/" + productId + "/" + size).then(response => {
             return response.data;
         });
     }

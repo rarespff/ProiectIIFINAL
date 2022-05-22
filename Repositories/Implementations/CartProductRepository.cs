@@ -23,27 +23,23 @@ namespace DataAccess.Repositories.Implementations
             this.shopCartRepository= shopCartRepository;
         }
 
-        public async Task<ActionResult<IEnumerable<CartProduct>>> GetCartProductsByUserId(int id)
+        public async Task<IEnumerable<CartProduct>> GetCartProductsByUserId(int id)
         {
             var shoppingCart = await shopCartRepository.GetCartByUserId(id);
             return await context.CartProducts.Where(cartProduct=>cartProduct.ShoppingCartId==shoppingCart.Value.Id).ToListAsync();
         }
 
-        public async Task<ActionResult<String>> AddProductToCart(int userId, CartProductVM cartProductVM)
+        public async Task<String> AddProductToCart(int userId,CartProductVM cartProductVM)
         {
             var shoppingCart = await shopCartRepository.GetCartByUserId(userId);
-            CartProduct cartProduct = new CartProduct();
-            cartProduct.ProductId=cartProductVM.ProductId;
-            cartProduct.Quantity=cartProductVM.Quantity;
-            cartProduct.Size=cartProductVM.Size;
-            cartProduct.ShoppingCartId = shoppingCart.Value.Id;
+            CartProduct cartProduct = new CartProduct(cartProductVM, shoppingCart.Value.Id);
             context.CartProducts.Add(cartProduct);
             await context.SaveChangesAsync();
             return ("Ok");
 
         }
 
-        public async Task<ActionResult<Int32>> GetCartProductsNumber(int id)
+        public async Task<Int32> GetCartProductsNumber(int id)
         {
             var shoppingCart = await shopCartRepository.GetCartByUserId(id);
             List<CartProduct> products= new List<CartProduct>();
@@ -51,7 +47,7 @@ namespace DataAccess.Repositories.Implementations
             return products.Count();
         }
 
-        public async Task<ActionResult<String>> RemoveProductsFromCart(int id)
+        public async Task<String> RemoveProductsFromCart(int id)
         {
             var cartProduct = await context.CartProducts.Where(cartProduct => cartProduct.Id == id).SingleOrDefaultAsync(); ;
             if (cartProduct == null)

@@ -62,10 +62,16 @@ namespace ProiectII.EF.Controllers
             return stock;
         }
 
+        [HttpPost]
+        [ActionName("AddStockToProduct")]
+        public async Task<ActionResult<String>> AddStockToProduct(Stock stock)
+        {
+
+        }
         // PUT: api/Stocks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStock(int id, Stock stock)
+        public async Task<ActionResult<String>> EditStock(int id, Stock stock)
         {
             if (id != stock.Id)
             {
@@ -93,16 +99,6 @@ namespace ProiectII.EF.Controllers
             return NoContent();
         }
 
-        // POST: api/Stocks
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Stock>> PostStock(Stock stock)
-        {
-            _context.Stocks.Add(stock);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetStock", new { id = stock.Id }, stock);
-        }
 
         // DELETE: api/Stocks/5
         [HttpDelete("{id}")]

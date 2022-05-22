@@ -1,5 +1,6 @@
 ﻿using DataAccess.EF.Models;
 using Microsoft.AspNetCore.Mvc;
+using ProiectII.EF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,6 @@ namespace DataAccess.Repositories.Interfaces
         Task<Brand> GetBrandById(int id);
         Task<IEnumerable<Brand>> GetAllBrands();
         Task<String> DeleteBrand(int id);
-        Task<String> AddBrand(Brand brand);
+        Task<String> AddBrand(BrandVM brandVM);
     }
 }

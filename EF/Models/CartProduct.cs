@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using ProiectII.EF.ViewModels;
 
 namespace DataAccess.EF.Models
 {
@@ -18,5 +19,15 @@ namespace DataAccess.EF.Models
         [JsonIgnore]
         public Product Product { get; set; }
         public int ProductId { get; set; }
+
+        public CartProduct() { }
+
+        public CartProduct(CartProductVM cartProductVM,int ShoppingCartId)
+        {
+            this.ProductId = cartProductVM.ProductId;
+            this.Quantity = cartProductVM.Quantity;
+            this.Size = cartProductVM.Size;
+            this.ShoppingCartId = ShoppingCartId;
+        }
     }
 }

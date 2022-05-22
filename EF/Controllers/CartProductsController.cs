@@ -9,6 +9,7 @@ using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
 using DataAccess.Repositories.Interfaces;
 using ProiectII.EF.ViewModels;
+using ProiectII.Services.Interfaces;
 
 namespace ProiectII.EF.Controllers
 {
@@ -17,86 +18,42 @@ namespace ProiectII.EF.Controllers
     public class CartProductsController : ControllerBase
     {
         private readonly IIDatabaseDbContext _context;
-        private readonly ICartProductRepository repository;
+        private readonly ICartProductService cartProductService;
 
-        public CartProductsController(IIDatabaseDbContext context, ICartProductRepository repository)
+        public CartProductsController(IIDatabaseDbContext context, ICartProductService cartProductService)
         {
             _context = context;
-            this.repository = repository;
+            this.cartProductService = cartProductService;
         }
 
-        // GET: api/CartProducts
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<CartProduct>>> GetCartProducts()
-        //{
-        //    return await _context.CartProducts.ToListAsync();
-        //}
 
-        // GET: api/CartProducts/5
         [HttpGet("{id}")]
         [ActionName("GetCartProductsByUserId")]
-        public async Task<ActionResult<IEnumerable<CartProduct>>> GetCartProducts(int id)
+        public async Task<ActionResult<IEnumerable<CartProductVM>>> GetCartProducts(int id)
         {
-            return await repository.GetCartProductsByUserId(id);
+            return Ok(await cartProductService.GetCartProducts(id));
         }
 
-        // PUT: api/CartProducts/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutCartProduct(int id, CartProduct cartProduct)
-        //{
-        //    if (id != cartProduct.Id)
-        //    {
-        //        return BadRequest();
-        //    }
 
-        //    _context.Entry(cartProduct).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!CartProductExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
-        // POST: api/CartProducts
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("{userId}")]
         [ActionName(("AddProductToCart"))]
         public async Task<ActionResult<String>> PostCartProduct(int userId,[FromBody] CartProductVM cartProductVM )
         {
-            return await repository.AddProductToCart(userId, cartProductVM);
+            return Ok(await cartProductService.AddCartProduct(userId, cartProductVM));
         }
 
         [HttpGet("{id}")]
         [ActionName("GetCartSize")]
         public async Task<ActionResult<Int32>> GetCartProductsNumber(int id)
         {
-            return await repository.GetCartProductsNumber(id);
+            return Ok(await cartProductService.GetCartProductsNumber(id));
         }
 
-        // DELETE: api/CartProducts/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<String>> DeleteCartProduct(int id)
         {
-            return await repository.RemoveProductsFromCart(id);
+            return Ok(await cartProductService.DeleteCartProduct(id));
         }
 
-        private bool CartProductExists(int id)
-        {
-            return _context.CartProducts.Any(e => e.Id == id);
-        }
     }
 }

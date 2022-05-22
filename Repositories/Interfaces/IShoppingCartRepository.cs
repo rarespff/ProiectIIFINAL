@@ -10,7 +10,6 @@ namespace DataAccess.Repositories.Interfaces
 {
     public interface IShoppingCartRepository
     {
-        Task<ActionResult<ShoppingCart>> GetCartByUserId(int id);
-        
+        Task<ShoppingCart> GetCartByUserId(int id);
     }
 }

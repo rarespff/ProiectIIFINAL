@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataAccess.EF.Models;
 
 namespace ProiectII.EF.ViewModels
 {
@@ -9,5 +10,13 @@ namespace ProiectII.EF.ViewModels
     {
         public int ProductId { get; set; }
         public int Size { get; set; }
+
+        public StockVM() { }
+
+        public StockVM(Stock stock)
+        {
+            this.ProductId = stock.ProductId;
+            this.Size = stock.Size;
+        }
     }
 }

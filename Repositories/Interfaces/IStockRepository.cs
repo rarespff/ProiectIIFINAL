@@ -12,7 +12,10 @@ namespace DataAccess.Repositories.Interfaces
     public interface IStockRepository
     {
       
-        Task<ActionResult<Stock>> GetStockByProductIdAndSize(StockVM stockVM);
-        Task<ActionResult<IEnumerable<Stock>>> GetStockDetailsForProductById(int id);
+        Task<Stock> GetStockByProductIdAndSize(StockVM stockVM);
+        Task<IEnumerable<Stock>> GetStockDetailsForProductById(int id);
+        Task<String> AddStockToProduct(Stock stock);
+        Task<String> EditStock(Stock stock);
+
     }
 }
