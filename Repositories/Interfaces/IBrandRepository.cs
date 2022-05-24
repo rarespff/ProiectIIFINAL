@@ -16,5 +16,6 @@ namespace DataAccess.Repositories.Interfaces
         Task<IEnumerable<Brand>> GetAllBrands();
         Task<String> DeleteBrand(int id);
         Task<String> AddBrand(BrandVM brandVM);
+        Task<String> EditBrand(Brand brand);
     }
 }

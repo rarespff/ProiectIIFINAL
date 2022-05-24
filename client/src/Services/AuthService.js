@@ -19,9 +19,6 @@ class AuthService {
 
     logout() {
         localStorage.removeItem("user");
-        // return axios.post(API_URL + "logout").then(response => {
-        //     console.log(response.data);
-        // });
         return ( <
                 FirstPage / >
             )

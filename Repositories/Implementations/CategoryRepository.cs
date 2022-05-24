@@ -23,6 +23,12 @@ namespace DataAccess.Repositories.Implementations
         {
             return await context.Categories.Where(category => category.Name == name).SingleOrDefaultAsync();
         }
-      
+
+        public async Task<IEnumerable<Category>> GetAllCategories()
+        {
+            return await context.Categories.ToListAsync();
+        }
+
+
     }
 }

@@ -1,10 +1,10 @@
 import axios from "axios";
 import authHeader from "./auth-header";
-const API_URL = "http://localhost:8081/categories/";
+const API_URL = "https://localhost:44367/api/Categories/";
 
 class CategoryService {
     getAllCategories() {
-        return axios.get(API_URL).then(response => {
+        return axios.get(API_URL + "GetAllCategories").then(response => {
             return response.data;
         });
     }
@@ -16,7 +16,7 @@ class CategoryService {
     }
 
     deleteCategoryById(id) {
-        return axios.delete(API_URL + id,{headers : authHeader()}).then(response => {
+        return axios.delete(API_URL + id, { headers: authHeader() }).then(response => {
             return response.data;
         });
     }
@@ -24,7 +24,7 @@ class CategoryService {
     addNewCategory(name) {
         return axios.post(API_URL + "add", {
             name: name
-        },{headers : authHeader()}).then(response => {
+        }, { headers: authHeader() }).then(response => {
             return response.data;
         })
     }
@@ -33,7 +33,7 @@ class CategoryService {
         return axios.post(API_URL + "edit", {
             id: id,
             name: name
-        },{headers : authHeader()}).then(response => {
+        }, { headers: authHeader() }).then(response => {
             return response.data;
         });
     }

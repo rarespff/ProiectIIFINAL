@@ -10,7 +10,7 @@ import {useNavigate} from 'react-router-dom';
 function ControlPanel() {
     const navigate = useNavigate();
     useEffect(() => {
-        if (!authService.getCurrentUser().roles.includes("ROLE_ADMIN")) {
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
     }, [])

@@ -24,7 +24,7 @@ function ControlPanelProductsEditProduct() {
     const[brand,setBrand] = useState(location.state.brand);
     const[photo, setPhoto] = useState();
     useEffect(() => {
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
         categoryService.getAllCategories().then(response => setCategories(response));

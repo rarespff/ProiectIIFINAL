@@ -13,7 +13,7 @@ function ControlPanelUsersDelete(){
     const navigate = useNavigate();
     const [users,setUsers] = useState([]);
     useEffect(() => {
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
         userService.getAllUsers().then(response => {

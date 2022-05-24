@@ -58,5 +58,21 @@ namespace DataAccess.Repositories.Implementations
                 return "Brand deleted";
             }
         }
+
+        public async Task<String> EditBrand(Brand brand)
+        {
+            var brandFind=await this.GetBrandById(brand.Id);
+            if(brandFind==null)
+            {
+                return "Brand not found";
+            }
+            else
+            {
+                brandFind.Name=brand.Name;
+                context.Brands.Update(brandFind);
+                await context.SaveChangesAsync();
+                return "Brand updated";
+            }
+        }
     }
 }

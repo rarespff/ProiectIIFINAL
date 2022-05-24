@@ -9,6 +9,7 @@ using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
 using DataAccess.Repositories.Interfaces;
 using ProiectII.EF.ViewModels;
+using ProiectII.Services.Interfaces;
 
 namespace ProiectII.EF.Controllers
 {
@@ -17,108 +18,59 @@ namespace ProiectII.EF.Controllers
     public class StocksController : ControllerBase
     {
         private readonly IIDatabaseDbContext _context;
-        private readonly IStockRepository repository;
+        private readonly IStockService stockService;
 
-        public StocksController(IIDatabaseDbContext context, IStockRepository repository)
+        public StocksController(IIDatabaseDbContext context, IStockService stockService)
         {
             _context = context;
-            this.repository=repository;
+            this.stockService = stockService;
         }
 
-        // GET: api/Stocks
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Stock>>> GetStocks()
-        {
-            return await _context.Stocks.ToListAsync();
-        }
-
-        [HttpGet]
-        [ActionName("GetStockByProductAndSize")]
-        public async Task<ActionResult<Stock>> GetStocksByProductAndSize(StockVM stockVM)
-        {
-            return await repository.GetStockByProductIdAndSize(stockVM);
-        }
-
-        [HttpGet("{id}")]
-        [ActionName("GetStockByProductAndSize")]
-        public async Task<ActionResult<IEnumerable<Stock>>> GetStockDetailsForProductById(int id)
-        {
-            return await repository.GetStockDetailsForProductById(id);
-        }
-
-
-
-        // GET: api/Stocks/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Stock>> GetStock(int id)
-        {
-            var stock = await _context.Stocks.FindAsync(id);
-
-            if (stock == null)
-            {
-                return NotFound();
-            }
-
-            return stock;
-        }
 
         [HttpPost]
         [ActionName("AddStockToProduct")]
         public async Task<ActionResult<String>> AddStockToProduct(Stock stock)
         {
-
+            return Ok(await stockService.AddStockToProduct(stock));
         }
         // PUT: api/Stocks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<ActionResult<String>> EditStock(int id, Stock stock)
+        //[HttpPost]
+        //[ActionName("EditStock")]
+        //public async Task<ActionResult<String>> EditStock([FromBody] Stock stock)
+        //{
+        //    return Ok(await stockService.EditStock(stock));
+        //}
+
+        [HttpPost]
+        [ActionName("EditStock")]
+        public async Task<ActionResult<StockEntryVM>> EditStock([FromBody] Stock stock)
         {
-            if (id != stock.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(stock).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StockExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(await stockService.EditStock(stock));
         }
 
 
         // DELETE: api/Stocks/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStock(int id)
+        [HttpDelete("{productName}/{size}")]
+        public async Task<ActionResult<String>> DeleteStock(string productName, int size)
         {
-            var stock = await _context.Stocks.FindAsync(id);
-            if (stock == null)
-            {
-                return NotFound();
-            }
-
-            _context.Stocks.Remove(stock);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Ok(await stockService.DeleteStock(productName, size));
         }
 
-        private bool StockExists(int id)
+
+        [HttpGet("{productId}")]
+        [ActionName("GetSmallestPrice")]
+        public async Task<ActionResult<Int32>> GetSmallestPriceByProductId(int productId)
         {
-            return _context.Stocks.Any(e => e.Id == id);
+            return Ok(await stockService.GetSmallestPriceByProductId(productId));
         }
+
+        [HttpGet]
+        [ActionName("GetAllStocks")]
+        public async Task<ActionResult<IEnumerable<StockEntryVM>>> GetAllStocks()
+        {
+            return Ok(await stockService.GetStocks());
+        }
+
     }
 }

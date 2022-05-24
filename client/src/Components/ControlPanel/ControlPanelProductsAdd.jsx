@@ -24,7 +24,7 @@ function ControlPanelProductsAdd() {
     const[username,setUsername] = useState("");
     const[photo, setPhoto] = useState();
     useEffect(() => {
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
         categoryService.getAllCategories().then(response => setCategories(response));

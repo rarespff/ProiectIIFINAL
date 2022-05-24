@@ -26,7 +26,7 @@ function ControlPanelStockEditStock() {
     const[quantity,setQuantity] = useState(location.state.quantity);
     const[featured,setFeatured] = useState(location.state.featured);
     useEffect(() => {
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
         productService.getAllProducts().then(response =>{
@@ -74,7 +74,8 @@ function ControlPanelStockEditStock() {
                         </Form.Select>
                         <Button variant="contained"  onClick={(e) => {
                             e.preventDefault();
-                            stockService.editStock(stockId,productId,size,price,quantity,featured) .then(()  => navigate(-1));
+                            console.log(productId);
+                            stockService.editStock(stockId,productId,size,price,quantity,featured).then(()  => navigate(-1));
                         }}>
                             Submit
                         </Button>

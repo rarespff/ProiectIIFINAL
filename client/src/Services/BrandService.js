@@ -18,22 +18,22 @@ class BrandService {
     addNewBrand(name) {
         return axios.post(API_URL + "AddBrand", {
             Name: name,
-        }, { headers: authHeader() }).then(response => {
+        }).then(response => {
             return response.data;
         });
     }
 
     deleteBrandById(id) {
-        return axios.delete(API_URL + "DeleteBrand/" + id, { headers: authHeader() }).then(response => {
+        return axios.delete(API_URL + "DeleteBrand/" + id).then(response => {
             return response.data;
         });
     }
 
     editBrand(id, name) {
-        return axios.post(API_URL + "edit", {
+        return axios.post(API_URL + "EditBrand", {
             id: id,
             name: name
-        }, { headers: authHeader() }).then(response => {
+        }).then(response => {
             return response.data;
         });
     }

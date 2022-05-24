@@ -45,7 +45,7 @@ function Navigation() {
 
     useEffect(() => {
         if(user) {
-            if(user.roles.includes("ROLE_ADMIN")) {
+            if(user.admin===1) {
                 setControlPanelHref("/ControlPanel");
                 setControlPanelText("Control Panel");
             }

@@ -15,12 +15,12 @@ function ControlPanelStockDelete(){
     const [stocks,setStocks] = useState([]);
 
     useEffect(() => {
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
         stockService.getAllStockEntries().then(response => {
             setStocks(response);
-            console.log(response);
+            console.log(stocks);
 
         })
 
@@ -55,7 +55,8 @@ function ControlPanelStockDelete(){
                                 <td>{stock.price}</td>
                                 <td>
                                     <Button variant="contained" onClick={() => {
-                                       stockService.deleteStockOfProduct(stock.productId,stock.size).then(() => {
+                                        console.log(stock.productName);
+                                       stockService.deleteStockOfProduct(stock.productName,stock.size).then(() => {
                                            stockService.getAllStockEntries().then(response => {
                                                setStocks(response);
                                            })

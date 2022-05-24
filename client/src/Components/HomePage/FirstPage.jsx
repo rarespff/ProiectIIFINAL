@@ -11,16 +11,8 @@ import ProductCard from "./components/ProductCard";
 import stockService from "../../Services/StockService";
 
 
-// productService.getProductsOnSale().then(response =
 
 function FirstPage() {
-
-    // const [productsOnSale, setProductsOnSale] = useState([]);
-    // useEffect(async () => {
-    //     productService.getProductsOnSale().then((response) => {
-    //         setProductsOnSale(response);
-    //     });
-    // },[]);
 
 
     return (
@@ -38,29 +30,6 @@ function FirstPage() {
                     </Container>
                 </Container>
             </Row>
-            {/* <Container className="featured-container">
-                <div className="featured-div">
-                    <h1 className="title, title-featured">
-                        Featured products
-                    </h1>
-                    <Divider className="divider"/>
-                </div>
-                <Col>
-                    <Row>
-                        { productsOnSale.map((product,index) => {
-
-                            console.log(product.stockDTOS);
-                           return <Col>
-                               <ProductCard key={index} productId={product.id} productName={product.name}
-                                            photoUrl={product.photoUrl} stocks={product.stockDTOS}
-                               />
-                           </Col>
-                        })
-                        }
-                    </Row>
-                </Col>
-            </Container> */}
-
             <FooterPage/></>
     )
 }

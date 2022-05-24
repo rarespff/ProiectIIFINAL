@@ -16,5 +16,6 @@ namespace DataAccess.Repositories.Interfaces
         Task<Product> GetProductByName(string name);
         Task<String> AddProduct(Product product);
         Task<String> DeleteProduct(int id);
+        Task<IEnumerable<Product>> GetAllProducts();
     }
 }

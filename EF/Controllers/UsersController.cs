@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
-using DataAccess.Repositories.Interfaces;
 using ProiectII.EF.ViewModels;
+using ProiectII.Services.Interfaces;
 
 namespace ProiectII.EF.Controllers
 {
@@ -17,113 +17,52 @@ namespace ProiectII.EF.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IIDatabaseDbContext _context;
-        private readonly IUserRepository repository;
+        private readonly IUserService userService;
 
-        public UsersController(IIDatabaseDbContext context, IUserRepository repository)
+        public UsersController(IIDatabaseDbContext context, IUserService userService)
         {
             _context = context;
-            this.repository = repository;
+            this.userService = userService;
         }
-
-        // GET: api/Users
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        //{
-        //    return await repository.GetUsers();
-        //}
-
-        // GET: api/Users/5
-        //[HttpGet("{id}")]
-        //[ActionName("GetUserById")]
-        //public async Task<ActionResult<User>> GetUser(int id)
-        //{
-        //    var user = await repository.GetUserById(id);
-
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return user;
-        //}
 
         [HttpPost]
         [ActionName("Login")]
-        public async Task<ActionResult<User>> AddUser([FromBody]UserVM userVM)
+        public async Task<ActionResult<User>> Login([FromBody]UserVM userVM)
         {
-            var user = await repository.GetUserByName(userVM.Username);
-            if(user==null)
-            {
-                return null;
-            }
-            else
-            {
-                if (user.Value.Password == userVM.Password)
-                {
-                    return user;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            //UserVM userReturnVM = new UserVM(await userService.Login(userVM));
+            return Ok(await userService.Login(userVM));
         }
 
         [HttpPost]
         [ActionName("Register")]
-        public async Task<ActionResult<String>> PostUser(User user)
+        public async Task<ActionResult<String>> RegiserUser([FromBody]AddUserVM addUserVM)
         {
-
-            var message = await repository.AddUser(user);
-
-            return message;
+            return Ok(await userService.RegiserUser(addUserVM));
         }
 
-        // DELETE: api/Users/5
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<String>> DeleteUser(int id)
-        //{
-        //    return await repository.DeleteUser(id);
-        //}
+        [HttpGet]
+        [ActionName("GetAllUsers")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        {
+            return Ok(await userService.GetUsers());
+        }
 
-        // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutUser(int id, User user)
-        //{
-        //    if (id != user.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpDelete("{id}")]
+        [ActionName("DeleteUser")]
+        public async Task<ActionResult<String>> DeleteUser(int id)
+        {
+            return Ok(await userService.DeleteUser(id));
+        }
 
-        //    _context.Entry(user).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!UserExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        [ActionName("EditUser")]
+        public async Task<ActionResult<String>> EditUser([FromBody] EditUserVM editUserVM)
+        {
+            return Ok(await userService.EditUser(editUserVM));
+        }
 
 
-        //    private bool UserExists(int id)
-        //    {
-        //        return _context.Users.Any(e => e.Id == id);
-        //    }
+
+        
     }
 }

@@ -15,7 +15,10 @@ namespace DataAccess.Repositories.Interfaces
         Task<Stock> GetStockByProductIdAndSize(StockVM stockVM);
         Task<IEnumerable<Stock>> GetStockDetailsForProductById(int id);
         Task<String> AddStockToProduct(Stock stock);
-        Task<String> EditStock(Stock stock);
-
+        //Task<String> EditStock(Stock stock);
+        Task<Stock> EditStock(Stock stock);
+        Task<String> DeleteStock(int productId,int size);
+        Task<Int32> GetSmallestPriceForProduct(int productId);
+        Task<IEnumerable<Stock>> GetStocks();
     }
 }

@@ -27,17 +27,10 @@ namespace ProiectII.EF.Controllers
             this.brandService = brandService;
         }
 
-        // GET: api/Brands
-        [HttpGet("{name}")]
-        [ActionName("ByName")]
-        public async Task<ActionResult<BrandVM>> GetBrand(string name)
-        {
-            return Ok(await brandService.GetBrand(name));
-        }
 
         [HttpGet]
         [ActionName("GetAllBrands")]
-        public async Task<ActionResult<IEnumerable<BrandVM>>> GetAllBrands()
+        public async Task<ActionResult<IEnumerable<Brand>>> GetAllBrands()
         {
             return Ok(await brandService.GetAllBrands());
         }
@@ -62,6 +55,13 @@ namespace ProiectII.EF.Controllers
         public async Task<ActionResult<String>> DeleteBrand(int id)
         {
             return Ok(await brandService.DeleteBrand(id));
+        }
+
+        [HttpPost]
+        [ActionName("EditBrand")]
+        public async Task<ActionResult<String>> EditBrand([FromBody] Brand brand)
+        {
+            return Ok(await brandService.EditBrand(brand));
         }
 
     }

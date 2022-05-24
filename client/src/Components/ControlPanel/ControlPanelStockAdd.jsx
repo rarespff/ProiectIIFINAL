@@ -24,10 +24,10 @@ function ControlPanelProductsAdd() {
     const[quantity,setQuantity] = useState(0);
     const[featured,setFeatured] = useState(false);
     useEffect(() => {
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
-        productService.getAllProducts().then(response =>{
+        productService.getAllProductsWithoutStock().then(response =>{
             setProducts(response);
             setProductId(response[0].id);
             console.log(response);

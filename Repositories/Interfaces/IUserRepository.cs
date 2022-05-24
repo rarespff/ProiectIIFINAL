@@ -10,10 +10,12 @@ namespace DataAccess.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        Task<ActionResult<IEnumerable<User>>> GetUsers();
-        Task<ActionResult<User>> GetUserByName(string name);
-        Task<ActionResult<User>> GetUserById(int id);
-        Task<ActionResult<String>> AddUser(User user);
-        Task<ActionResult<String>> DeleteUser(int id);
+        Task<IEnumerable<User>> GetUsers();
+        Task<User> GetUserByName(string name);
+        Task<User> GetUserById(int id);
+        Task<String> RegisterUser(User user);
+        Task<String> DeleteUser(int id);
+        Task<String> EditUser(User user);
+        Task<User> LoginUser(User user);
     }
 }

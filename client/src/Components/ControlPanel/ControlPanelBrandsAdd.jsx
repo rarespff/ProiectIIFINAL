@@ -16,10 +16,10 @@ function ControlPanelBrandsAdd() {
     const location = useLocation()
     const [name,setName] = useState("");
     useEffect(() => {
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
-    },[])
+    }, [])
 
 
 

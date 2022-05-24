@@ -20,7 +20,7 @@ namespace DataAccess.Repositories.Implementations
             this.context = context;
         }
 
-        public async Task<ActionResult<ShoppingCart>> GetCartByUserId(int id)
+        public async Task<ShoppingCart> GetCartByUserId(int id)
         {
             return await context.ShoppingCarts.Where(shoppingCart=>shoppingCart.UserId==id).SingleOrDefaultAsync();
         }

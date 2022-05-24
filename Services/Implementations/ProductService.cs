@@ -55,6 +55,8 @@ namespace ProiectII.Services.Implementations
         {
             var brandId = await brandRepository.GetBrandByName(productVM.BrandName);
             var categoryId = await categoryRepository.GetCategoryByName(productVM.CategoryName);
+            Console.WriteLine(brandId);
+            Console.WriteLine(categoryId);
             Product product = new Product(productVM, categoryId.Id, brandId.Id);
             return await productRepository.AddProduct(product);
         }
@@ -63,5 +65,18 @@ namespace ProiectII.Services.Implementations
         {
             return await productRepository.DeleteProduct(id);
         }
+
+        public async Task<IEnumerable<ProductVM>> GetAllProducts()
+        {
+            IEnumerable<Product> products = await productRepository.GetAllProducts();
+            return products.Select(product => new ProductVM(product));
+        }
+
+        public async Task<IEnumerable<ProductVM>> GetCategoryProducts(string categoryName)
+        {
+            IEnumerable<Product> sportProducts=await productRepository.GetProductByCategoryName(categoryName);
+            return sportProducts.Select(product => new ProductVM(product));
+        }
+
     }
 }

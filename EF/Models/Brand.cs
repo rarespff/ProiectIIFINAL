@@ -17,7 +17,6 @@ namespace DataAccess.EF.Models
 
         public Brand(BrandVM brandVM)
         {
-            this.Id=brandVM.Id;
             this.Name=brandVM.Name;
         }
     }

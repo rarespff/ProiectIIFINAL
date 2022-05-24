@@ -14,5 +14,8 @@ namespace ProiectII.Services.Interfaces
         Task<ProductVM> GetProductByName(string name);
         Task<String> AddProduct([FromForm] AddProductVM productVM);
         Task<String> DeleteProduct(int id);
+        Task<IEnumerable<ProductVM>> GetAllProducts();
+        Task<IEnumerable<ProductVM>> GetCategoryProducts(string categoryName);
+
     }
 }

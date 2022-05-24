@@ -9,9 +9,10 @@ namespace ProiectII.Services.Interfaces
     public interface IBrandService
     {
         Task<BrandVM> GetBrand(string name);
-        Task<IEnumerable<BrandVM>> GetAllBrands();
+        Task<IEnumerable<Brand>> GetAllBrands();
         Task<BrandVM> GetBrandById(int id);
         Task<String> AddBrand(BrandVM brandVM);
         Task<String> DeleteBrand(int id);
+        Task<String> EditBrand(Brand brand);
     }
 }

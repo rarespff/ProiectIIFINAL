@@ -11,6 +11,7 @@ using ProiectII.Repositories.Implementations;
 using DataAccess.Repositories.Interfaces;
 using ProiectII.EF.ViewModels;
 using ProiectII.Services.Implementations;
+using ProiectII.Services.Interfaces;
 
 namespace ProiectII.EF.Controllers
 {
@@ -18,8 +19,8 @@ namespace ProiectII.EF.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly ProductService productService;
-        public ProductsController(ProductService productService)
+        private readonly IProductService productService;
+        public ProductsController(IProductService productService)
         {
             this.productService= productService;
         }
@@ -30,6 +31,13 @@ namespace ProiectII.EF.Controllers
         public async Task<ActionResult<IEnumerable<ProductVM>>> GetProducts()
         {
             return Ok(await productService.GetProducts());
+        }
+
+        [HttpGet]
+        [ActionName("AllProducts")]
+        public async Task<ActionResult<IEnumerable<ProductVM>>> GetAllProducts()
+        {
+            return Ok(await productService.GetAllProducts());
         }
 
         [HttpGet("{id}")]
@@ -55,7 +63,7 @@ namespace ProiectII.EF.Controllers
 
         [HttpPost]
         [ActionName("AddProduct")]
-        public async Task<ActionResult<String>> AddProduct([FromBody] AddProductVM productVM)
+        public async Task<ActionResult<String>> AddProduct([FromForm] AddProductVM productVM)
         {
             return Ok(await productService.AddProduct(productVM));
         }
@@ -65,6 +73,30 @@ namespace ProiectII.EF.Controllers
         public async Task<ActionResult<String>> DeleteProduct(int id)
         {
             return Ok(await productService.DeleteProduct(id));
+        }
+
+        [HttpGet]
+        [ActionName("SportProducts")]
+        public async Task<ActionResult<IEnumerable<ProductVM>>> GetSportProducts()
+        {
+            string categoryName = "Sport";
+            return Ok(await productService.GetCategoryProducts(categoryName));
+        }
+
+        [HttpGet]
+        [ActionName("CasualProducts")]
+        public async Task<ActionResult<IEnumerable<ProductVM>>> GetCasualProducts()
+        {
+            string categoryName = "Casual";
+            return Ok(await productService.GetCategoryProducts(categoryName));
+        }
+
+        [HttpGet]
+        [ActionName("ElegantProducts")]
+        public async Task<ActionResult<IEnumerable<ProductVM>>> GetElegantProducts()
+        {
+            string categoryName = "Elegant";
+            return Ok(await productService.GetCategoryProducts(categoryName));
         }
 
         //private bool ProductExists(int id)

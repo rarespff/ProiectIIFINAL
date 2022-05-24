@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProiectII.EF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,15 @@ namespace DataAccess.EF.Models
         [JsonIgnore]
         public Product Product { get; set; }
         public int ProductId { get; set; }
+
+        public Stock() { }
+        
+        public Stock(StockEntryVM stockEntryVM)
+        {
+            this.Id = stockEntryVM.Id;
+            this.Quantity = stockEntryVM.Quantity;
+            this.Size = stockEntryVM.Size;
+            this.Price = stockEntryVM.Price;
+        }
     }
 }

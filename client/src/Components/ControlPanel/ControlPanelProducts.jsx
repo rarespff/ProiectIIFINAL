@@ -9,7 +9,7 @@ import FooterPage from "../HomePage/FooterPage";
 function ControlPanelProducts() {
     const navigate = useNavigate();
     useEffect(() => {
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
     },[])

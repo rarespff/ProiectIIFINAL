@@ -18,5 +18,6 @@ namespace ProiectII.EF.ViewModels
             this.ProductId = stock.ProductId;
             this.Size = stock.Size;
         }
+
     }
 }

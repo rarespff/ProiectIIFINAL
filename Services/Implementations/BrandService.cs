@@ -26,10 +26,10 @@ namespace ProiectII.Services.Implementations
             return (new BrandVM(brand));
         }
 
-        public async Task<IEnumerable<BrandVM>> GetAllBrands()
+        public async Task<IEnumerable<Brand>> GetAllBrands()
         {
             IEnumerable<Brand> brands = await brandRepository.GetAllBrands();
-            return brands.Select(brand => new BrandVM(brand));
+            return brands;
         }
 
         public async Task<BrandVM> GetBrandById(int id)
@@ -46,6 +46,11 @@ namespace ProiectII.Services.Implementations
         public async Task<String> DeleteBrand(int id)
         {
             return await brandRepository.DeleteBrand(id);
+        }
+
+        public async Task<String> EditBrand(Brand brand)
+        {
+            return await brandRepository.EditBrand(brand);
         }
     }
 }

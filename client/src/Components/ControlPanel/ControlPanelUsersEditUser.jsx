@@ -18,7 +18,7 @@ function ControlPanelUsersEditUser() {
     const[email,setEmail] = useState(location.state.email);
     const[username,setUsername] = useState(location.state.username);
     useEffect(() => {
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
     },[])

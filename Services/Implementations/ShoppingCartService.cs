@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using DataAccess.EF.AppDbContext;
 using DataAccess.EF.Models;
 using DataAccess.Repositories.Interfaces;
+using ProiectII.Services.Interfaces;
 
 namespace ProiectII.Services.Implementations
 {
-    public class ShoppingCartService
+    public class ShoppingCartService : IShoppingCartService
     {
         private readonly IIDatabaseDbContext context;
         private readonly IShoppingCartRepository shoppingRepository;

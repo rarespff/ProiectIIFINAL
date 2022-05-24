@@ -13,7 +13,7 @@ function ControlPanelBrandsDelete(){
     const navigate = useNavigate();
     const [brands,setBrands] = useState([]);
     useEffect(() => {
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
         brandService.getAllBrands().then(response => {

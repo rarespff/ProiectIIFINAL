@@ -14,7 +14,7 @@ function ControlPanelProductsDelete(){
     const [products,setProducts] = useState([]);
 
     useEffect(() => {
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
         productService.getAllProducts().then(response => {

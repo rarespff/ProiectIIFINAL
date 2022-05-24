@@ -26,13 +26,13 @@ namespace DataAccess.Repositories.Implementations
         public async Task<IEnumerable<CartProduct>> GetCartProductsByUserId(int id)
         {
             var shoppingCart = await shopCartRepository.GetCartByUserId(id);
-            return await context.CartProducts.Where(cartProduct=>cartProduct.ShoppingCartId==shoppingCart.Value.Id).ToListAsync();
+            return await context.CartProducts.Where(cartProduct=>cartProduct.ShoppingCartId==shoppingCart.Id).ToListAsync();
         }
 
         public async Task<String> AddProductToCart(int userId,CartProductVM cartProductVM)
         {
             var shoppingCart = await shopCartRepository.GetCartByUserId(userId);
-            CartProduct cartProduct = new CartProduct(cartProductVM, shoppingCart.Value.Id);
+            CartProduct cartProduct = new CartProduct(cartProductVM, shoppingCart.Id);
             context.CartProducts.Add(cartProduct);
             await context.SaveChangesAsync();
             return ("Ok");

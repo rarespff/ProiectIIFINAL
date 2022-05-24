@@ -33,7 +33,6 @@ namespace DataAccess.EF.Models
         {
             this.Id = productVM.Id;
             this.Name = productVM.Name;
-            this.Price = productVM.Price;
             this.PhotoUrl = productVM.PhotoUrl;
             this.CategoryId=categoryId;
             this.BrandId=brandId;

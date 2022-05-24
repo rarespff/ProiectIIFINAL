@@ -16,7 +16,7 @@ function ControlPaneBrandsEditBrand() {
     const [id,setId] = useState(location.state.id);
     const[name,setName] = useState(location.state.name);
     useEffect(() => {
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
     },[])

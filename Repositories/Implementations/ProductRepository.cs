@@ -73,5 +73,10 @@ namespace ProiectII.Repositories.Implementations
                 return "Product deleted";
             }
         }
+
+        public async Task<IEnumerable<Product>> GetAllProducts()
+        {
+            return await context.Products.ToListAsync();
+        }
     }
 }

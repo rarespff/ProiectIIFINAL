@@ -15,7 +15,7 @@ function ControlPanelStockEdit(){
     const [stocks,setStocks] = useState([]);
 
     useEffect(() => {
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
         stockService.getAllStockEntries().then(response => {

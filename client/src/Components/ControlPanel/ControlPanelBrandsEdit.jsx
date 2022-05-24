@@ -13,11 +13,12 @@ function ControlPanelBrandsEdit(){
     const navigate = useNavigate();
     const [brands,setBrands] = useState([]);
     useEffect(() => {
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
         brandService.getAllBrands().then(response => {
             setBrands(response);
+            console.log(brands);
         });
 
     },[])

@@ -46,6 +46,12 @@ namespace ProiectII
             services.AddScoped<StockRepository>();
             services.AddScoped<CategoryRepository>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<ICartProductService, CartProductService>();
+            services.AddScoped<IStockService, StockService>();
+            services.AddScoped<IShoppingCartService, ShoppingCartService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICategoryService, CategoryService>();
 
 
 

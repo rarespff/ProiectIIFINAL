@@ -9,7 +9,7 @@ namespace ProiectII.Services.Interfaces
 {
     public interface ICartProductService
     {
-        Task<IEnumerable<CartProduct>> GetCartProducts(int id);
+        Task<IEnumerable<CartProductVM>> GetCartProducts(int id);
         Task<String> AddCartProduct(int userId, [FromBody] CartProductVM cartProductVM);
         Task<Int32> GetCartProductsNumber(int id);
         Task<String> DeleteCartProduct(int id);
