@@ -27,8 +27,8 @@ function ProductCard(props){
         // })
     },[]);
     
-    console.log(props.productName);
-    console.log(props.productId);
+    // console.log(props.productName);
+    // console.log(props.productId);
 
 
     return (

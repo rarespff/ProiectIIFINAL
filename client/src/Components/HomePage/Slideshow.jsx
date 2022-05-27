@@ -3,7 +3,7 @@ import {Slide} from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import "../../Styles/styles.css";
 // import picture1 from "./SlideShow/Images/slideshow_1.jpg";
-import picture1 from "../../Pictures/IMG_E1111.JPG"
+import picture1 from "./SlideShow/Images/slideshow_1.jpg";
 import picture2 from "./SlideShow/Images/slideshow_2.jpg";
 import picture3 from "./SlideShow/Images/slideshow_3.jpg";
 import picture4 from "./SlideShow/Images/slideshow_4.jpg";
