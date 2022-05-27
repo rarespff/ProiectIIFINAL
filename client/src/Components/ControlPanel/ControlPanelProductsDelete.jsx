@@ -17,7 +17,7 @@ function ControlPanelProductsDelete(){
         if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
-        productService.getAllProducts().then(response => {
+        productService.getAllProductsWithoutStock().then(response => {
             setProducts(response);
             console.log(response);
 
@@ -54,8 +54,9 @@ function ControlPanelProductsDelete(){
                                 <td>{product.brand}</td>
                                 <td>
                                     <button onClick={() => {
+                                        console.log(product.id);
                                         productService.deleteById(product.id).then(() => {
-                                            productService.getAllProducts().then(response => {
+                                            productService.getAllProductsWithoutStock().then(response => {
                                                 setProducts(response);
                                             })
                                         })

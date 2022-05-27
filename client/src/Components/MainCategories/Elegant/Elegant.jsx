@@ -16,6 +16,7 @@ function Elegant() {
         });
     }, []);
 
+    console.log(elegantProducts);
 
     return (
         <>
@@ -31,7 +32,7 @@ function Elegant() {
                     <Row>
                         {elegantProducts.map((product, index) => {
                             return <ProductCard key={index} productId={product.id} productName={product.name}
-                                                photoUrl={product.photoUrl} stocks={product.stockDTOS}
+                                                photoUrl={product.photoUrl} stocks={product.stocks}
                             />
                         })
                         }

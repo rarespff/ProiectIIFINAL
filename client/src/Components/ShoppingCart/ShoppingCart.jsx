@@ -17,11 +17,12 @@ function ShoppingCart(){
 
     useEffect(() => {
         if(user){
-        if(!authService.getCurrentUser().roles.includes("ROLE_ADMIN")){
+        if(!authService.getCurrentUser().admin===1){
             navigate(-1);
         }
           cartService.getCartProducts(user.id).then((response) => {
               setProducts(response);
+              console.log(products);
           })
       }
 
@@ -56,6 +57,7 @@ function ShoppingCart(){
                                 <td>{product.size}</td>
                                 <td>
                                     <Button variant="contained" className="add-to-cart-button"  onClick={(e) => {
+                                        // console.log(product.id);
                                         e.preventDefault();
                                         cartService.removeFromCart(product.id).then(() => {
                                             cartService.getCartProducts(user.id).then((response) => {

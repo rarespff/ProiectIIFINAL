@@ -22,7 +22,7 @@ namespace ProiectII.EF.Controllers
         private readonly IProductService productService;
         public ProductsController(IProductService productService)
         {
-            this.productService= productService;
+            this.productService = productService;
         }
 
         // GET: api/Products
@@ -77,7 +77,7 @@ namespace ProiectII.EF.Controllers
 
         [HttpGet]
         [ActionName("SportProducts")]
-        public async Task<ActionResult<IEnumerable<ProductVM>>> GetSportProducts()
+        public async Task<ActionResult<IEnumerable<ProductWithStockVM>>> GetSportProducts()
         {
             string categoryName = "Sport";
             return Ok(await productService.GetCategoryProducts(categoryName));
@@ -85,7 +85,7 @@ namespace ProiectII.EF.Controllers
 
         [HttpGet]
         [ActionName("CasualProducts")]
-        public async Task<ActionResult<IEnumerable<ProductVM>>> GetCasualProducts()
+        public async Task<ActionResult<IEnumerable<ProductWithStockVM>>> GetCasualProducts()
         {
             string categoryName = "Casual";
             return Ok(await productService.GetCategoryProducts(categoryName));
@@ -93,10 +93,25 @@ namespace ProiectII.EF.Controllers
 
         [HttpGet]
         [ActionName("ElegantProducts")]
-        public async Task<ActionResult<IEnumerable<ProductVM>>> GetElegantProducts()
+        public async Task<ActionResult<IEnumerable<ProductWithStockVM>>> GetElegantProducts()
         {
             string categoryName = "Elegant";
             return Ok(await productService.GetCategoryProducts(categoryName));
+        }
+
+        [HttpGet]
+        [ActionName("GetImage")]
+        public async Task<IActionResult> GetImageToShow([FromHeader]string path)
+        {
+            Byte[] b = System.IO.File.ReadAllBytes(path);
+            return File(b,"image/jpg");
+        }
+
+        [HttpPost]
+        [ActionName("EditProduct")]
+        public async Task<ActionResult<String>> EditProduct([FromForm]AddProductVM addProductVM)
+        {
+            return Ok(await productService.EditProduct(addProductVM));
         }
 
         //private bool ProductExists(int id)

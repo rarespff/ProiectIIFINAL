@@ -19,5 +19,11 @@ namespace ProiectII.EF.ViewModels
             this.Size = stock.Size;
         }
 
+        public StockVM(int productId,int size)
+        {
+            this.ProductId = productId;
+            this.Size = size;
+        }
+
     }
 }

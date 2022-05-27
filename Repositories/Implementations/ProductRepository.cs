@@ -8,20 +8,25 @@ using DataAccess.Repositories.Implementations;
 using DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ProiectII.EF.ViewModels;
 
 namespace ProiectII.Repositories.Implementations
 {
     public class ProductRepository : IProductRepository
     {
         private readonly IIDatabaseDbContext context;
-        private readonly StockRepository stockRepository;
-        private readonly CategoryRepository categoryRepository;
+        private readonly IStockRepository stockRepository;
+        private readonly ICategoryRepository categoryRepository;
+        private readonly IBrandRepository brandRepository;
 
-        public ProductRepository(IIDatabaseDbContext context, StockRepository repository, CategoryRepository categoryRepository)
+
+        public ProductRepository(IIDatabaseDbContext context, IStockRepository stockRepository, 
+                                    ICategoryRepository categoryRepository, IBrandRepository brandRepository)
         {
             this.context = context;
-            this.stockRepository = repository;
+            this.stockRepository = stockRepository;
             this.categoryRepository = categoryRepository;
+            this.brandRepository = brandRepository;
         }
 
         public async  Task<Product> GetProductById(int id)
@@ -41,16 +46,41 @@ namespace ProiectII.Repositories.Implementations
         {
             var stocks = await context.Stocks.Where(stock => stock.Quantity > 0).ToListAsync();
             var availableProducts =  new List<Product>();
-            foreach(Stock stock in stocks)
+            bool ok = false;
+            foreach (Stock stock in stocks)
             {
-                availableProducts.Add(await this.GetProductById(stock.ProductId));
+                ok = false;
+                int productId = stock.ProductId;
+                foreach(Product product in availableProducts)
+                {
+                    if(product.Id == productId)
+                    {
+                        ok = true;
+                        break;
+                    }
+                }
+                if(ok==false)
+                {
+                    availableProducts.Add(await this.GetProductById(stock.ProductId));
+                }
             }
             return availableProducts;
         }
 
         public async Task<IEnumerable<Product>> GetProductByCategoryName(string name)
         {
-            return await context.Products.Where(product => product.Category.Name == name).ToListAsync();
+            IEnumerable<Product> availableProducts =await  this.GetAvailableProducts();
+            var productsFromCategory = new List<Product>();
+            foreach (Product product in availableProducts)
+            {
+                Category category=await categoryRepository.GetCategoryById(product.CategoryId);
+                if (category.Name==name)
+                {
+                    productsFromCategory.Add(product);
+                }
+            }
+            return productsFromCategory;
+            //return await context.Products.Where(product => product.Category.Name == name).ToListAsync();
         }
 
        
@@ -77,6 +107,39 @@ namespace ProiectII.Repositories.Implementations
         public async Task<IEnumerable<Product>> GetAllProducts()
         {
             return await context.Products.ToListAsync();
+        }
+
+        public async Task<String> EditProduct(AddProductVM product,string photoUrl)
+        {
+            Product productFind = await this.GetProductById(product.Id);
+            if(productFind == null)
+            {
+                return "Product not found";
+            }
+            else
+            {
+                if(product.Name!=null)
+                {
+                    productFind.Name = product.Name;
+                }
+                if(product.CategoryName!=null)
+                {
+                    productFind.CategoryId=categoryRepository.GetCategoryByName(product.CategoryName).Result.Id;
+                }
+                if(product.BrandName!=null)
+                {
+                    productFind.BrandId=brandRepository.GetBrandByName(product.BrandName).Result.Id;
+                }
+                if(product.PhotoUrl!=null)
+                {
+                    productFind.PhotoUrl = photoUrl;
+                }
+                context.Products.Update(productFind);
+                await context.SaveChangesAsync();
+                return ("Product updated");
+                
+            }
+
         }
     }
 }

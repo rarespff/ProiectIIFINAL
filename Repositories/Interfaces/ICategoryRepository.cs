@@ -11,5 +11,6 @@ namespace DataAccess.Repositories.Interfaces
     {
         Task<Category> GetCategoryByName(string name);
         Task<IEnumerable<Category>> GetAllCategories();
+        Task<Category> GetCategoryById(int id);
     }
 }

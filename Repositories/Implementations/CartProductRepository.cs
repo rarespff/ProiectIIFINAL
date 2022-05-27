@@ -32,10 +32,21 @@ namespace DataAccess.Repositories.Implementations
         public async Task<String> AddProductToCart(int userId,CartProductVM cartProductVM)
         {
             var shoppingCart = await shopCartRepository.GetCartByUserId(userId);
-            CartProduct cartProduct = new CartProduct(cartProductVM, shoppingCart.Id);
-            context.CartProducts.Add(cartProduct);
-            await context.SaveChangesAsync();
-            return ("Ok");
+            if (shoppingCart == null)
+            {
+                shoppingCart= await shopCartRepository.CreateShoppingCartForUser(userId);
+                CartProduct cartProduct = new CartProduct(cartProductVM, shoppingCart.Id);
+                context.CartProducts.Add(cartProduct);
+                await context.SaveChangesAsync();
+                return ("Ok");
+            }
+            else
+            {
+                CartProduct cartProduct = new CartProduct(cartProductVM, shoppingCart.Id);
+                context.CartProducts.Add(cartProduct);
+                await context.SaveChangesAsync();
+                return ("Ok");
+            }
 
         }
 

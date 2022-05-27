@@ -3,6 +3,7 @@ import Navigation from '../HomePage/Navigation';
 import {UserContext} from "./UserContext";
 import {IoMdLogIn} from "react-icons/io";
 import authService from "../../Services/AuthService";
+import cartService from "../../Services/CartService"
 import { useNavigate } from 'react-router-dom';
 import {Container} from "@mui/material";
 import {Form} from "react-bootstrap";
@@ -31,15 +32,12 @@ function Login(props) {
             <Container>
                 <Form className="login-form">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control onChange={handleEmailInput} type="email" placeholder="Enter email" />
-                        <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
-                        </Form.Text>
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control onChange={handleEmailInput} type="email" placeholder="Enter username" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label>Enter Password</Form.Label>
                         <Form.Control onChange={handlePasswordInput} type="password" placeholder="Password" />
                     </Form.Group>
                     <Button variant="contained"   onClick={(e) => {

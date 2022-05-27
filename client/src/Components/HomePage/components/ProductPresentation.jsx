@@ -1,4 +1,4 @@
-import products from "../../Components/MainCategories/components/products.json";
+// import products from "../../Components/MainCategories/components/products.json";
 import "../../../Styles/productstyles.css";
 import picture from "../../../Pictures/1.jpg"
 import { render } from "@testing-library/react";

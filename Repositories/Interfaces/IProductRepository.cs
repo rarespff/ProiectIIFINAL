@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess.EF.Models;
 using Microsoft.AspNetCore.Mvc;
+using ProiectII.EF.ViewModels;
 
 namespace DataAccess.Repositories.Interfaces
 {
@@ -17,5 +18,7 @@ namespace DataAccess.Repositories.Interfaces
         Task<String> AddProduct(Product product);
         Task<String> DeleteProduct(int id);
         Task<IEnumerable<Product>> GetAllProducts();
+        Task<String> EditProduct(AddProductVM product,string photoUrl);
+
     }
 }

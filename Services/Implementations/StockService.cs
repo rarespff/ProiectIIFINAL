@@ -28,10 +28,6 @@ namespace ProiectII.Services.Implementations
             return await stockRepository.AddStockToProduct(stock);
         }
 
-        //public async Task<String> EditStock(Stock stock)
-        //{
-        //    return await stockRepository.EditStock(stock);
-        //}
 
         public async Task<StockEntryVM> EditStock(Stock stock)
         {
@@ -56,6 +52,45 @@ namespace ProiectII.Services.Implementations
         {
             IEnumerable<Stock> stocks= await stockRepository.GetStocks();
             return stocks.Select(stock => new StockEntryVM(stock, productRepository.GetProductById(stock.ProductId).Result.Name));
+        }
+
+        public async Task<String> AlterStock(int productId, int size, int quantity)
+        {
+            if(quantity<0)
+            {
+                await this.RemoveStock(productId,size,quantity);
+                return "Ok";
+            }
+            else
+            {
+                await this.AddStock(productId,size,quantity);
+                return "Ok";
+            }
+        }
+
+        public async Task<String> RemoveStock(int productId, int size, int quantity)
+        {
+            StockVM stockVM = new StockVM(productId, size);
+            Stock stock = await stockRepository.GetStockByProductIdAndSize(stockVM);
+            if(stock != null)
+            {
+                stock.Quantity=stock.Quantity-Math.Abs(quantity);
+                if(stock.Quantity<0)
+                {
+                    return "Stock should not ne negative";
+                }
+            }
+            await context.SaveChangesAsync();
+            return "Ok";
+        }
+
+        public async Task<String> AddStock(int productId, int size, int quantity)
+        {
+            StockVM stockVM = new StockVM(productId, size);
+            Stock stock = await stockRepository.GetStockByProductIdAndSize(stockVM);
+            stock.Quantity = stock.Quantity + quantity;
+            await context.SaveChangesAsync();
+            return "Ok";
         }
 
 

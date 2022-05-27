@@ -10,5 +10,12 @@ namespace DataAccess.EF.Models
         public int UserId { get; set; }
         public bool IsOrdered { get; set; }
 
+        public ShoppingCart() { }
+
+        public ShoppingCart(int userId)
+        {
+            this.UserId = userId;
+            this.IsOrdered = false;
+        }
     }
 }

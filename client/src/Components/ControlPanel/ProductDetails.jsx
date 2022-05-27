@@ -35,9 +35,6 @@ function ProductDetails() {
         return items;
     }
 
-
-
-
     return(
         <>
         <Navigation/>
@@ -85,9 +82,11 @@ function ProductDetails() {
                 <Col>
                     <Button variant="contained" className="add-to-cart-button"  onClick={(e) => {
                         e.preventDefault();
+                        console.log(currentUser);
                         if(currentUser){
                             cartService.addToCart(currentUser.id,productId,quantity,size).then(() => {
                                 window.location.reload(false);
+
                             })
 
                         }else {

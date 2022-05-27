@@ -29,7 +29,7 @@ namespace ProiectII.EF.Controllers
 
         [HttpPost]
         [ActionName("AddStockToProduct")]
-        public async Task<ActionResult<String>> AddStockToProduct(Stock stock)
+        public async Task<ActionResult<String>> AddStockToProduct([FromBody]Stock stock)
         {
             return Ok(await stockService.AddStockToProduct(stock));
         }

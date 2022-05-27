@@ -11,5 +11,6 @@ namespace DataAccess.Repositories.Interfaces
     public interface IShoppingCartRepository
     {
         Task<ShoppingCart> GetCartByUserId(int id);
+        Task<ShoppingCart> CreateShoppingCartForUser(int userId);
     }
 }

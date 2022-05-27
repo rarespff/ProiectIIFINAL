@@ -24,5 +24,13 @@ namespace DataAccess.Repositories.Implementations
         {
             return await context.ShoppingCarts.Where(shoppingCart=>shoppingCart.UserId==id).SingleOrDefaultAsync();
         }
+
+        public async Task<ShoppingCart> CreateShoppingCartForUser(int userId)
+        {
+            ShoppingCart shoppingCart = new ShoppingCart(userId);
+            context.ShoppingCarts.Add(shoppingCart);
+            await context.SaveChangesAsync();
+            return await this.GetCartByUserId(userId);
+        }
     }
 }

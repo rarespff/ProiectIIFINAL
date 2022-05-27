@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using ProiectII.EF.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,8 @@ namespace ProiectII.Services.Interfaces
         Task<String> AddProduct([FromForm] AddProductVM productVM);
         Task<String> DeleteProduct(int id);
         Task<IEnumerable<ProductVM>> GetAllProducts();
-        Task<IEnumerable<ProductVM>> GetCategoryProducts(string categoryName);
-
+        Task<IEnumerable<ProductWithStockVM>> GetCategoryProducts(string categoryName);
+        string UploadProductImage(IFormFile file);
+        Task<String> EditProduct(AddProductVM productVM);
     }
 }

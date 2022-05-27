@@ -76,12 +76,11 @@ function ControlPanelProductsAdd() {
                             }
                         }} aria-label="Featured">
                                 <option value={0}>false</option>
-                                <option value={1}>true</option>)
+                                <option value={1}>true</option>
                         </Form.Select>
                         <Button variant="contained"  onClick={(e) => {
                             e.preventDefault();
-                            console.log(featured);
-                            stockService.addStockToProduct(productId,size,price,quantity,featured) .then(()  => navigate(-1));
+                            stockService.addStockToProduct(productId,size,price,quantity,featured).then(()  => navigate(-1));
                         }}>
                             Submit
                         </Button>

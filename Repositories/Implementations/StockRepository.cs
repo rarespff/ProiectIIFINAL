@@ -26,7 +26,7 @@ namespace DataAccess.Repositories.Implementations
             return await context.Stocks.Where(stock => stock.ProductId == stockVM.ProductId && stock.Size == stockVM.Size).SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Stock>> GetStockDetailsForProductById(int id)
+        public async Task<List<Stock>> GetStockDetailsForProductById(int id)
         {
             return await context.Stocks.Where(stock=>stock.ProductId==id).ToListAsync();
         }

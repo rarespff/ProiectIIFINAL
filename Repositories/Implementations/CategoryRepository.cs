@@ -29,6 +29,11 @@ namespace DataAccess.Repositories.Implementations
             return await context.Categories.ToListAsync();
         }
 
+        public async Task<Category> GetCategoryById(int id)
+        {
+            return await context.Categories.Where(category => category.Id == id).SingleOrDefaultAsync();
+        }
+
 
     }
 }

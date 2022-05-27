@@ -17,7 +17,7 @@ function ControlPanelProductsEdit(){
         if (!authService.getCurrentUser().admin===1) {
             navigate(-1);
         }
-        productService.getAllProducts().then(response => {
+        productService.getAllProductsWithoutStock().then(response => {
             setProducts(response);
             console.log(response);
 
@@ -48,7 +48,7 @@ function ControlPanelProductsEdit(){
                         <tbody>
                         {products && products.map((product, index) =>
                             <tr key={index}>
-                                <td><img src={product.photoUrl} alt ={product.name}/></td>
+                                <td><img src={process.env.PUBLIC_URL + "/" + product.photoUrl} alt ={product.name}/></td>
                                 <td>{product.name}</td>
                                 <td>{product.category}</td>
                                 <td>{product.brand}</td>

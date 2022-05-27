@@ -14,5 +14,8 @@ namespace ProiectII.Services.Interfaces
         Task<String> DeleteStock(string productName, int size);
         Task<Int32> GetSmallestPriceByProductId(int productId);
         Task<IEnumerable<StockEntryVM>> GetStocks();
+        Task<String> AlterStock(int productId, int size, int quantity);
+        Task<String> RemoveStock(int productId, int size, int quantity);
+        Task<String> AddStock(int productId, int size, int quantity);
     }
 }

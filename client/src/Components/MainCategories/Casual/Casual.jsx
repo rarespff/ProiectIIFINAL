@@ -6,6 +6,7 @@ import productService from "../../../Services/ProductService";
 import {Container, Divider} from "@mui/material";
 import {Col, Row} from "react-bootstrap";
 import ProductCard from "../../HomePage/components/ProductCard";
+// import { copyFileSync } from "fs";
 function Casual() {
 
     const [casualProducts, setCasualProducts] = useState([]);
@@ -14,7 +15,6 @@ function Casual() {
             setCasualProducts(response);
         });
     }, []);
-
 
     return (
         <>
@@ -30,7 +30,7 @@ function Casual() {
                     <Row>
                         {casualProducts.map((product, index) => {
                             return <ProductCard key={index} productId={product.id} productName={product.name}
-                                                photoUrl={product.photoUrl} stocks={product.stockDTOS}
+                                                photoUrl={product.photoUrl} stocks={product.stocks}
                             />
                         })
                         }

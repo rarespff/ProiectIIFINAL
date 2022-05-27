@@ -29,9 +29,9 @@ namespace ProiectII.EF.Controllers
 
         [HttpGet("{id}")]
         [ActionName("GetCartProductsByUserId")]
-        public async Task<ActionResult<IEnumerable<CartProductVM>>> GetCartProducts(int id)
+        public async Task<ActionResult<IEnumerable<CartProductsToShowVM>>> GetCartProductsByUserId(int id)
         {
-            return Ok(await cartProductService.GetCartProducts(id));
+            return Ok(await cartProductService.GetCartProductsByUserId(id));
         }
 
 
@@ -53,6 +53,13 @@ namespace ProiectII.EF.Controllers
         public async Task<ActionResult<String>> DeleteCartProduct(int id)
         {
             return Ok(await cartProductService.DeleteCartProduct(id));
+        }
+
+        [HttpPost("{id}")]
+        [ActionName("OrderProducts")]
+        public async Task<ActionResult<String>> OrderProducts(int userId)
+        {
+            return Ok(await cartProductService.OrderProducts(userId));  
         }
 
     }

@@ -47,8 +47,8 @@ function Register() {
         <Form.Control onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
       </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control onChange={(e) => setConfPassword(e.target.value)} type="password" placeholder="Password" />
+        <Form.Label>Confirm Password</Form.Label>
+        <Form.Control onChange={(e) => setConfPassword(e.target.value)} type="password" placeholder="Confirm Password" />
       </Form.Group>
         <Button variant="contained"   onClick={(e) => {
           e.preventDefault();
