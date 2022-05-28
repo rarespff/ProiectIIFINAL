@@ -39,7 +39,17 @@ function ControlPanelBrandsAdd() {
                         </Form.Group>
                         <button  onClick={(e) => {
                             e.preventDefault();
-                            brandService.addNewBrand(name).then(()  => navigate(-1));
+                            brandService.addNewBrand(name).then((response)  =>{
+                                if(response==="IncorrectFormat")
+                                {
+                                    alert("Check brand name,it should only contain letters");
+                                }
+                                else
+                                {
+                                    navigate(-1);
+                                }
+                            }  )
+
                         }}>
                             Submit
                         </button>

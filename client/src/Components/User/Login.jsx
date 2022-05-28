@@ -42,8 +42,15 @@ function Login(props) {
                     </Form.Group>
                     <Button variant="contained"   onClick={(e) => {
                         e.preventDefault();
-                        authService.login(email, password).then(() => {
-                            navigate("/");
+                        authService.login(email, password).then((response) => {
+                            if(response === "")
+                            {
+                                alert("User not found,please check username and password");
+                            }
+                            else
+                            {
+                                navigate("/");
+                            }
                         })}
                     }>
                         Submit

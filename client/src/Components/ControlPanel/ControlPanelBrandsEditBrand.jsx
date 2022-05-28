@@ -39,7 +39,17 @@ function ControlPaneBrandsEditBrand() {
                         </Form.Group>
                         <button  onClick={(e) => {
                             e.preventDefault();
-                            brandService.editBrand(id,name).then(()  => navigate(-1));
+                            brandService.editBrand(id,name).then((response)  => {
+                                if(response==="IncorrectFormat")
+                                {
+                                    alert("Check brand name,it should only contain letters");
+                                }
+                                else
+                                {
+                                    navigate(-1);
+                                }
+                            }
+                            );
                         }}>
                             Submit
                         </button>

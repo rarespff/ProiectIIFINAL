@@ -12,6 +12,7 @@ using DataAccess.Repositories.Interfaces;
 using ProiectII.EF.ViewModels;
 using ProiectII.Services.Implementations;
 using ProiectII.Services.Interfaces;
+using System.Text.RegularExpressions;
 
 namespace ProiectII.EF.Controllers
 {
@@ -65,6 +66,11 @@ namespace ProiectII.EF.Controllers
         [ActionName("AddProduct")]
         public async Task<ActionResult<String>> AddProduct([FromForm] AddProductVM productVM)
         {
+            bool checkString = this.CheckOnlyString(productVM.Name);
+            if(!checkString)
+            {
+                return "IncorrectFormat";
+            }
             return Ok(await productService.AddProduct(productVM));
         }
 
@@ -111,12 +117,35 @@ namespace ProiectII.EF.Controllers
         [ActionName("EditProduct")]
         public async Task<ActionResult<String>> EditProduct([FromForm]AddProductVM addProductVM)
         {
+            bool checkString = this.CheckOnlyString(addProductVM.Name);
+            if (!checkString)
+            {
+                return "IncorrectFormat";
+            }
             return Ok(await productService.EditProduct(addProductVM));
         }
 
-        //private bool ProductExists(int id)
-        //{
-        //    return _context.Products.Any(e => e.Id == id);
-        //}
+        #region Validation methods
+        public Boolean CheckOnlyString(String fieldText)
+        {
+            String trimmedText = fieldText.Trim();
+            return Regex.IsMatch(trimmedText, @"^[a-zA-Z]+$");
+
+        }
+        public Boolean CheckUsername(String userName)
+        {
+            String trimmedName = userName.Trim();
+            Char firstLetter = trimmedName[0];
+            return (Regex.IsMatch(trimmedName, @"^[a-zA-Z0-9]+$")) && (Char.IsLetter(firstLetter));
+        }
+        private Boolean CheckEmail(String email)
+        {
+            String trimmedEmail = email.Trim();
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(email);
+            return match.Success;
+
+        }
+        #endregion
     }
 }

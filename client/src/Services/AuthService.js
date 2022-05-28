@@ -1,4 +1,5 @@
 import axios from "axios";
+import React from "react";
 import FirstPage from "../Components/HomePage/FirstPage";
 import { useHistory } from "react-router-dom"
 
@@ -11,7 +12,6 @@ class AuthService {
                 password: password
             })
             .then(response => {
-                console.log(response.data);
                 localStorage.setItem("user", JSON.stringify(response.data));
                 return response.data;
             });

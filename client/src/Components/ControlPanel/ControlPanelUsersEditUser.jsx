@@ -49,7 +49,21 @@ function ControlPanelUsersEditUser() {
                         </Form.Group>
                         <button  onClick={(e) => {
                             e.preventDefault();
-                            userService.editUser(id, firstName, lastName, email).then(r  => navigate(-1));
+                            userService.editUser(id, firstName, lastName, email).then((response)  => {
+                                if (response === "IncorrectEmail") {
+                                    alert("Check email,it should have at least one letter at the begging, then the structure @letters.com or @letters.ro");
+                                }
+                                else if (response === "IncorrectFirst") {
+                                    alert("Check first name,it should only contain letters");
+                                }
+                                else if (response === "IncorrectLast") {
+                                    alert("Check first name,it should only contain letters");
+                                }
+                                else
+                                {
+                                    navigate(-1);
+                                }
+                            });
                         }}>
                             Submit
                         </button>
